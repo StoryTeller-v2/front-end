@@ -119,7 +119,7 @@ const StoryGeneratorModal = ({
                       style={styles.roundButton}
                     >
                       <Image
-                        source={require('../../assets/images/polygon.png')}
+                        source={require('../../../assets/images/polygon.png')}
                         style={styles.buttonImage}
                       />
                     </TouchableOpacity>

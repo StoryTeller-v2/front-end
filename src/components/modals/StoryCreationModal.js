@@ -65,7 +65,7 @@ const StoryCreationModal = ({
                 </View>
                 <View style={styles.imageContainer}>
                   <Image
-                    source={require('../../assets/images/Wave.png')}
+                    source={require('../../../assets/images/Wave.png')}
                     style={styles.image}
                   />
                 </View>

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {Image, View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import VoiceInputErrorModal from '../components/modals/VoiceInputErrorModal';
+import VoiceInputModal from '../components/modals/VoiceInputModal';
 import fetchWithAuth from '../api/fetchWithAuth';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
