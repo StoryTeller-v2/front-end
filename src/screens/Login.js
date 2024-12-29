@@ -34,7 +34,7 @@ import {
   getAccessToken,
   getRefreshToken,
 } from '../utils/storage';
-import OkModal from '../components/OkModal.js';
+import OkModal from '../components/common/OkModal.js';
 
 const Login = ({navigation}) => {
   const [user, setUser] = useState('');
@@ -59,6 +59,7 @@ const Login = ({navigation}) => {
       formData.append('username', user);
       formData.append('password', password);
 
+      console.log('Google Login URL:', `${Config.API_BASE_URL}/google-login`);
       const response = await fetch(`${Config.API_BASE_URL}/login`, {
         method: 'POST',
         body: formData,

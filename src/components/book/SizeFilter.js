@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import fetchWithAuth from '../api/fetchWithAuth.js'; 
+import fetchWithAuth from '../../api/fetchWithAuth.js'; 
 
 const SizeFilter = ({handleSizeFilter, profileId, bookId, initialSize }) => {
     let buttons = ["작게", "기본", "크게"];

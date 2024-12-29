@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Modal, Button, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Ionic from 'react-native-vector-icons/Ionicons';
-import SpeedFilter from './SpeedFilter';
-import SizeFilter from './SizeFilter';
+import SpeedFilter from '../book/SpeedFilter';
+import SizeFilter from '../book/SizeFilter';
 
 const SettingModal = ({ isVisible, onClose, handleSizeFilter,handleSpeedFilter, profileId, bookId, initialSize, currentText, initialSpeed  }) => {
     const [speed, setSpeed] = useState(initialSpeed);

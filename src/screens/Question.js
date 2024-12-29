@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import QuestionInputModal from '../components/QuestionInputModal';
+import QuestionInputModal from '../components/modals/QuestionInputModal';
 import fetchWithAuth from '../api/fetchWithAuth';
 
 const Question = () => {

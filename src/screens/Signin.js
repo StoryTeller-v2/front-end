@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView,
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Logo from '../../assets/images/logo.png';
 import Config from '../config.js';
-import OkModal from '../components/OkModal.js';
+import OkModal from '../components/common/OkModal.js';
 
 const Signin = ({ navigation }) => {
     const [email, setEmail] = useState('')

@@ -1,8 +1,8 @@
 import {View, Text, StyleSheet, Modal, Alert} from 'react-native';
 import React from 'react';
-import YesNoButton from './YesNoButton';
+import YesNoButton from './YesNoButton.js';
 import {useNavigation} from '@react-navigation/native';
-import fetchWithAuth from '../api/fetchWithAuth.js';
+import fetchWithAuth from '../../api/fetchWithAuth.js';
 
 const YesNoModal = ({
   isVisible,

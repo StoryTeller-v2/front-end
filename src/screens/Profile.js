@@ -8,9 +8,9 @@ import {
   BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AddProfileModal from '../components/AddProfileModal';
-import SelectPinInputModal from '../components/SelectPinInputModal';
-import EditPinInputModal from '../components/EditPinInputModal';
+import AddProfileModal from '../components/modals/AddProfileModal';
+import SelectPinInputModal from '../components/modals/SelectPinInputModal';
+import EditPinInputModal from '../components/modals/EditPinInputModal';
 import {useAuth} from '../context/AuthContext';
 import fetchWithAuth from '../api/fetchWithAuth';
 

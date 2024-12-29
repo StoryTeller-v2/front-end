@@ -10,7 +10,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import fetchWithAuth from '../api/fetchWithAuth';
+import fetchWithAuth from '../../api/fetchWithAuth';
 
 const SelectPinInputModal = ({visible, onClose, onPinCorrect, profileId}) => {
   const [pin, setPin] = useState(['', '', '', '']);

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import fetchWithAuth from '../api/fetchWithAuth.js'; 
+import fetchWithAuth from '../../api/fetchWithAuth.js'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Tts from 'react-native-tts';
 

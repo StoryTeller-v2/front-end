@@ -11,8 +11,8 @@ import {
   FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import YesNoModal from './YesNoModal';
-import fetchWithAuth from '../api/fetchWithAuth'; // fetchWithAuth 불러오기
+import YesNoModal from '../common/YesNoModal';
+import fetchWithAuth from '../../api/fetchWithAuth';
 
 const AddProfileModal = ({visible, onClose, userId}) => {
   console.log('AddProfileModal에서 받은 유저 id:', userId); // userId 확인
@@ -152,7 +152,7 @@ const AddProfileModal = ({visible, onClose, userId}) => {
               source={
                 selectedProfilePic ||
                 defaultProfilePic ||
-                require('../../assets/images/temp_profile_pic.png')
+                require('../../../assets/images/temp_profile_pic.png')
               }
               style={styles.profileImage}
             />
@@ -201,7 +201,7 @@ const AddProfileModal = ({visible, onClose, userId}) => {
               style={styles.saveButton}
               onPress={handleSaveProfile}>
               <Image
-                source={require('../../assets/images/save.png')}
+                source={require('../../../assets/images/save.png')}
                 style={styles.saveIcon}
               />
               <Text style={styles.saveButtonText}>프로필 저장</Text>

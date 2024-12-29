@@ -147,7 +147,7 @@ const QuestionInputModal = ({
                 </View>
                 <View style={styles.imageContainer}>
                   <Image
-                    source={require('../../assets/images/Wave.png')}
+                    source={require('../../../assets/images/Wave.png')}
                     style={styles.image}
                   />
                 </View>
@@ -160,7 +160,7 @@ const QuestionInputModal = ({
                     onPress={startRecording}
                     style={styles.roundButton}>
                     <Image
-                      source={require('../../assets/images/voice.png')}
+                      source={require('../../../assets/images/voice.png')}
                       style={styles.voiceImage}
                     />
                   </TouchableOpacity>

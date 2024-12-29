@@ -8,7 +8,7 @@ import {
   Modal,
   Keyboard,
 } from 'react-native';
-import fetchWithAuth from '../api/fetchWithAuth'; // 인증된 fetch 함수
+import fetchWithAuth from '../../api/fetchWithAuth';
 import EditProfileModal from './EditProfileModal';
 
 const EditPinInputModal = ({visible, onClose, profileId, onProfileUpdate}) => {

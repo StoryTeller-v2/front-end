@@ -14,10 +14,10 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import ProgressBar from '../components/ProgressBar';
-import SettingModal from '../components/SettingModal';
-import YesNoModal from '../components/YesNoModal';
-import NextStep from '../components/NextStep';
+import ProgressBar from '../components/book/ProgressBar.js';
+import SettingModal from '../components/modals/SettingModal.js';
+import YesNoModal from '../components/common/YesNoModal.js';
+import NextStep from '../components/book/NextStep.js';
 import BookBg from '../../assets/images/bookBg.png';
 import fetchWithAuth from '../api/fetchWithAuth.js';
 import Tts from 'react-native-tts';

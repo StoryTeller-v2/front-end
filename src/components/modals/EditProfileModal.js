@@ -10,9 +10,9 @@ import {
   StyleSheet,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import YesNoModal from './YesNoModal';
-import fetchWithAuth from '../api/fetchWithAuth';
-import OkModal from './OkModal.js';
+import YesNoModal from '../common/YesNoModal.js';
+import fetchWithAuth from '../../api/fetchWithAuth.js';
+import OkModal from '../common/OkModal.js';
 
 const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
   const [name, setName] = useState('');
@@ -169,7 +169,7 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
               source={
                 selectedProfilePic
                   ? {uri: selectedProfilePic}
-                  : require('../../assets/images/temp_profile_pic.png') // 기본 이미지를 사용하지 않음
+                  : require('../../../assets/images/temp_profile_pic.png') // 기본 이미지를 사용하지 않음
               }
               style={styles.profileImage}
             />
@@ -219,7 +219,7 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
                 style={styles.saveButton}
                 onPress={handleSaveProfile}>
                 <Image
-                  source={require('../../assets/images/save.png')}
+                  source={require('../../../assets/images/save.png')}
                   style={styles.saveIcon}
                 />
                 <Text style={styles.saveButtonText}>프로필 저장</Text>
@@ -228,7 +228,7 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
                 style={styles.saveButton}
                 onPress={handleDeleteProfile}>
                 <Image
-                  source={require('../../assets/images/delete.png')}
+                  source={require('../../../assets/images/delete.png')}
                   style={styles.saveIcon}
                 />
                 <Text style={styles.saveButtonText}>프로필 삭제</Text>

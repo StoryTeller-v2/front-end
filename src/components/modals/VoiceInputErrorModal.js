@@ -71,7 +71,7 @@ const VoiceInputErrorModal = ({
                     onPress={onKeyboardInput}
                     style={styles.roundButton}>
                     <Image
-                      source={require('../../assets/images/keyboard.png')}
+                      source={require('../../../assets/images/keyboard.png')}
                       style={styles.buttonImage}
                     />
                   </TouchableOpacity>
@@ -83,7 +83,7 @@ const VoiceInputErrorModal = ({
                   style={[styles.gradientButton, styles.marginLeft]}>
                   <TouchableOpacity onPress={onRetry} style={styles.roundButton}>
                     <Image
-                      source={require('../../assets/images/microphone.png')}
+                      source={require('../../../assets/images/microphone.png')}
                       style={styles.buttonImage}
                     />
                   </TouchableOpacity>
