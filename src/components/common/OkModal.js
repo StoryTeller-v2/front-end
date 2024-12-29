@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient'; // LinearGradient import
+import LinearGradient from 'react-native-linear-gradient';
 
 const OkModal = ({ isVisible, onClose, title, message }) => {
   return (
@@ -15,7 +15,7 @@ const OkModal = ({ isVisible, onClose, title, message }) => {
           <Text style={styles.modalTitle}>{title}</Text>
           <Text style={styles.modalMessage}>{message}</Text>
           <LinearGradient
-            colors={['#F8C683', '#FF8C43']} // 그라데이션 색상
+            colors={['#F8C683', '#FF8C43']}
             style={styles.gradientButton}
           >
             <TouchableOpacity onPress={onClose} style={styles.okButton}>
@@ -49,23 +49,23 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   modalTitle: {
-    marginVertical: 3, // 상하 간격 줄임
+    marginVertical: 3,
     fontFamily: 'TAEBAEKfont',
     fontSize: 28,
     textAlign: 'center',
-    marginTop: 10, // 텍스트를 위쪽으로 이동
+    marginTop: 10,
   },
   modalMessage: {
-    marginVertical: 40, // 상하 간격 줄임
+    marginVertical: 40,
     fontWeight: '100',
     textAlign: 'center',
     fontSize: 23,
     color: 'black',
     fontFamily: 'TAEBAEKmilkyway',
-    marginTop: 5, // 텍스트를 위쪽으로 이동
+    marginTop: 5,
   },
   gradientButton: {
-    borderRadius: 30, // 버튼을 둥글게
+    borderRadius: 30,
     overflow: 'hidden',
     marginTop: 20,
   },

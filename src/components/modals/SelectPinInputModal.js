@@ -57,8 +57,8 @@ const SelectPinInputModal = ({ visible, onClose, onPinCorrect, profileId }) => {
       ) {
         if (result.data.valid) {
           setError('');
-          onPinCorrect(profileId); // PIN이 맞으면 콜백 호출
-          onClose(); // 모달 닫기
+          onPinCorrect(profileId);
+          onClose();
         } else {
           setError('PIN 번호가 틀렸습니다. 다시 입력해주세요.');
           setPin(['', '', '', '']);

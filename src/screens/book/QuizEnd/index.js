@@ -10,7 +10,7 @@ const QuizEnd = () => {
   const navigation = useNavigation();
 
   const startQuiz = () => {
-    navigation.navigate('BookShelf'); // BookShelf 화면으로 이동
+    navigation.navigate('BookShelf');
   };
 
   return (

@@ -10,14 +10,12 @@ const Question = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [showGoodJobImage, setShowGoodJobImage] = useState(false);
   const [quizQuestion, setQuizQuestion] = useState('');
-  const navigation = useNavigation(); // useNavigation 훅 사용
-  const route = useRoute(); // useRoute 훅 사용
+  const navigation = useNavigation();
+  const route = useRoute();
 
-  // profileId와 bookId는 route.params에서 가져오기
-  const {profileId, bookId} = route.params || {}; // route.params가 undefined일 때를 대비
+  const {profileId, bookId} = route.params || {};
 
   useEffect(() => {
-    // profileId와 bookId가 존재할 때만 퀴즈를 가져오기
     if (profileId && bookId) {
       fetchQuiz(profileId, bookId);
     } else {
@@ -53,15 +51,13 @@ const Question = () => {
   };
 
   const handleModalClose = () => {
-    // 모달이 닫힌 후 2초 뒤에 goodjob.png를 표시
     setTimeout(() => {
       setShowGoodJobImage(true);
-      // goodjob.png를 3초 후에 숨기고 QuizEnd로 이동
       setTimeout(() => {
-        setShowGoodJobImage(false); // goodjob.png 숨기기
-        navigation.navigate('QuizEnd'); // QuizEnd.js로 이동
-      }, 3000); // 3초 후
-    }, 2000); // 2초 후
+        setShowGoodJobImage(false);
+        navigation.navigate('QuizEnd');
+      }, 3000);
+    }, 2000);
   };
 
   return (
@@ -89,10 +85,10 @@ const Question = () => {
       <QuestionInputModal
         visible={modalVisible}
         onClose={() => {
-          closeModal(); // 모달을 닫는다.
-          handleModalClose(); // 모달이 닫힌 후 이미지 표시 및 페이지 이동 처리
+          closeModal();
+          handleModalClose();
         }}
-        onSpeechEnd={() => {}} // 음성 응답이 끝났을 때 호출될 함수 전달
+        onSpeechEnd={() => {}}
       />
       {showGoodJobImage && (
         <View style={styles.goodJobContainer}>

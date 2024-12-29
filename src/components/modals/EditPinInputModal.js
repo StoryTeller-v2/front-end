@@ -20,9 +20,8 @@ const EditPinInputModal = ({ visible, onClose, profileId, onProfileUpdate }) => 
   const inputRefs = useRef([]);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-  // profileId가 제대로 전달되는지 확인하는 로그
   useEffect(() => {
-    console.log('Received profileId:', profileId); // profileId가 잘 전달되는지 확인
+    console.log('Received profileId:', profileId);
   }, [profileId]);
 
   // 모달이 열릴 때 PIN을 초기화
@@ -44,7 +43,7 @@ const EditPinInputModal = ({ visible, onClose, profileId, onProfileUpdate }) => 
 
     // 모든 입력이 완료된 경우 PIN을 확인
     if (newPin.every(digit => digit.length > 0)) {
-      verifyPin(newPin.join('')); // PIN 검증 호출
+      verifyPin(newPin.join(''));
     }
   };
 
@@ -100,15 +99,15 @@ const EditPinInputModal = ({ visible, onClose, profileId, onProfileUpdate }) => 
   };
 
   const resetPin = () => {
-    setPin(['', '', '', '']); // PIN 초기화
-    inputRefs.current[0].focus(); // 첫 번째 입력으로 포커스 이동
+    setPin(['', '', '', '']);
+    inputRefs.current[0].focus();
   };
 
   // 모달 닫기 핸들러
   const handleClose = useCallback(() => {
-    resetPin(); // PIN 초기화
-    setError(''); // 오류 메시지 초기화
-    onClose(); // 부모 컴포넌트의 onClose 호출
+    resetPin();
+    setError('');
+    onClose();
   }, [onClose]);
 
   useEffect(() => {
@@ -171,7 +170,6 @@ const EditPinInputModal = ({ visible, onClose, profileId, onProfileUpdate }) => 
         </View>
       </Modal>
 
-      {/* EditProfileModal should be conditionally rendered */}
       {isEditProfileModalVisible && (
         <EditProfileModal
           visible={isEditProfileModalVisible}

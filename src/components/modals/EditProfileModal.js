@@ -150,7 +150,6 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
 
   return (
     <>
-      {/* EditProfileModal */}
       <Modal
         transparent={true}
         animationType="slide"
@@ -170,7 +169,7 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
               source={
                 selectedProfilePic
                   ? { uri: selectedProfilePic }
-                  : require('../../../assets/images/temp_profile_pic.png') // 기본 이미지를 사용하지 않음
+                  : require('../../../assets/images/temp_profile_pic.png')
               }
               style={styles.profileImage}
             />
@@ -293,7 +292,7 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
         }
         buttonText1={yesNoModalType === 'delete' ? '삭제' : '확인'}
         buttonText2="취소"
-        profileId={yesNoModalType === 'delete' ? profileId : null} // 프로필 ID 전달
+        profileId={yesNoModalType === 'delete' ? profileId : null}
         closeEditor={onClose}
         onProfileUpdate={onProfileUpdate}
       />

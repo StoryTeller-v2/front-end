@@ -1,4 +1,3 @@
-// src/components/VoiceInputModal.js
 import React, { useRef, useEffect } from 'react';
 import {
   View,
@@ -34,7 +33,7 @@ const StoryCreationModal = ({ visible, onClose, message1, message2 }) => {
   }, [visible, slideAnim]);
 
   const handleOverlayPress = () => {
-    // Do nothing
+    // 모달 바깥을 클릭하면 모달 닫기
   };
 
   return (

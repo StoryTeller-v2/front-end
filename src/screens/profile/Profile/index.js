@@ -56,11 +56,10 @@ const Profile = ({ navigation, route }) => {
 
   const handleAddProfileModalClose = () => {
     setIsAddProfileModalVisible(false);
-    fetchProfiles(); // 프로필 목록을 다시 가져옵니다.
+    fetchProfiles(); 
   };
 
   const handlePinCorrect = () => {
-    // PIN이 맞으면 BookShelf으로 이동하면서 프로필 ID를 전달
     navigation.navigate('BookShelf', { profileId: selectedProfileId });
   };
 
@@ -68,18 +67,18 @@ const Profile = ({ navigation, route }) => {
     if (isChangingProfile) {
       setModalType('edit');
       selectProfile(profile.id);
-      selectProfileId(profile.id); // 선택된 프로필 ID 저장
+      selectProfileId(profile.id); 
       setIsEditPinInputModalVisible(true);
     } else {
       setModalType('select');
       selectProfile(profile.id);
-      selectProfileId(profile.id); // 선택된 프로필 ID 저장
+      selectProfileId(profile.id); 
       setIsPinInputModalVisible(true);
     }
   };
 
   const handleProfileUpdate = () => {
-    fetchProfiles(); // 프로필 목록 업데이트
+    fetchProfiles(); 
   };
 
   const renderProfiles = () => {
@@ -178,16 +177,16 @@ const Profile = ({ navigation, route }) => {
       <SelectPinInputModal
         visible={isPinInputModalVisible && modalType === 'select'}
         onClose={() => setIsPinInputModalVisible(false)}
-        onPinCorrect={handlePinCorrect} // 수정된 부분
-        profileId={selectedProfileId} // 프로필 ID를 전달
-        onProfileUpdate={handleProfileUpdate} // 프로필 수정 후 업데이트
+        onPinCorrect={handlePinCorrect} 
+        profileId={selectedProfileId} 
+        onProfileUpdate={handleProfileUpdate} 
       />
       <EditPinInputModal
         visible={isEditPinInputModalVisible}
         onClose={() => setIsEditPinInputModalVisible(false)}
         onPinCorrect={handlePinCorrect}
-        profileId={selectedProfileId} // 프로필 ID 전달
-        onProfileUpdate={handleProfileUpdate} // 프로필 수정 후 업데이트
+        profileId={selectedProfileId} 
+        onProfileUpdate={handleProfileUpdate} 
       />
     </SafeAreaView>
   );

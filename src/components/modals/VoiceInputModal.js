@@ -26,7 +26,7 @@ const VoiceInputModal = ({
   message,
   profileId,
   fetchWithAuth,
-  refreshBooks, // 추가: 새로고침 함수 전달
+  refreshBooks,
 }) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [isRecording, setIsRecording] = useState(false);
@@ -105,7 +105,7 @@ const VoiceInputModal = ({
   };
 
   const handleOverlayPress = () => {
-    // Do nothing
+    // 음성 입력 중지
   };
 
   useEffect(() => {
@@ -185,7 +185,7 @@ const VoiceInputModal = ({
         prompt={transcribedText}
         profileId={profileId}
         fetchWithAuth={fetchWithAuth}
-        refreshBooks={refreshBooks} // 추가: 새로고침 함수 전달
+        refreshBooks={refreshBooks}
       />
     </>
   );

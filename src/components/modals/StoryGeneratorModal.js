@@ -1,4 +1,3 @@
-// src/components/StoryGeneratorModal.js
 import React, { useRef, useEffect, useState } from 'react';
 import {
   View,
@@ -77,7 +76,7 @@ const StoryGeneratorModal = ({
         setTimeout(() => {
           onClose();
           setShowSuccessModal(false);
-        }, 3000); // 3초 후 모달 닫기
+        }, 3000);
       } else {
         console.error('Error creating story:', response.statusText);
       }

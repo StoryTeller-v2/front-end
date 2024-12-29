@@ -20,9 +20,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    marginTop: 'auto', // SafeAreaView의 하단으로 이동
-    marginBottom: 80, // 하단 여백 추가
-    position: 'relative', // 상대 위치 지정
+    marginTop: 'auto',
+    marginBottom: 80,
+    position: 'relative',
   },
   quizText: {
     fontSize: 35,
@@ -64,11 +64,11 @@ export const styles = StyleSheet.create({
   },
   ovalContainer: {
     flexDirection: 'row',
-    justifyContent: 'center', // 중앙 정렬
-    marginTop: 30, // 간격을 조정하여 타원들이 위로 올라가도록
+    justifyContent: 'center',
+    marginTop: 30,
     width: '100%',
   },
   oval: {
-    height: 10, // 타원의 높이
+    height: 10,
   },
 });

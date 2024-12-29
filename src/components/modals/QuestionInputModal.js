@@ -23,8 +23,8 @@ const QuestionInputModal = ({
   onClose,
   profileId,
   fetchWithAuth,
-  refreshBooks, // 추가: 새로고침 함수 전달
-  onSpeechEnd, // 추가: 음성 응답 끝났을 때 호출될 콜백
+  refreshBooks,
+  onSpeechEnd,
 }) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [isRecording, setIsRecording] = useState(false);
@@ -80,9 +80,8 @@ const QuestionInputModal = ({
       const text = event.value[0];
       setTranscribedText(text);
       setIsRecording(false);
-      onSpeechEnd(); // 음성 응답이 끝났을 때 호출
+      onSpeechEnd();
 
-      // 3초 후에 모달 닫기
       setTimeout(() => {
         onClose();
       }, 3000);
@@ -106,7 +105,7 @@ const QuestionInputModal = ({
   };
 
   const handleOverlayPress = () => {
-    // Do nothing
+    // 모달 바깥 부분 터치 시 닫히지 않도록 설정
   };
 
   useEffect(() => {

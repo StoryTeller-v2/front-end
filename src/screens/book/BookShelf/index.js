@@ -14,9 +14,9 @@ const BookShelf = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [books, setBooks] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [imageUrl, setImageUrl] = useState(''); // 프로필 이미지 URL 상태
+  const [imageUrl, setImageUrl] = useState('');
 
-  const { profileId } = useAuth(); // useAuth 훅을 통해 profileId 받아오기
+  const { profileId } = useAuth();
   console.log(`메인 페이지의 프로필 id: ${profileId}`);
   const navigation = useNavigation();
 
@@ -52,7 +52,7 @@ const BookShelf = () => {
       });
       const result = await response.json();
       if (result.status === 200 && result.code === 'SUCCESS_GET_PROFILE') {
-        setImageUrl(result.data.imageUrl); // 프로필 이미지 설정
+        setImageUrl(result.data.imageUrl);
       }
     } catch (error) {
       console.error('Failed to fetch profile:', error);
@@ -61,20 +61,17 @@ const BookShelf = () => {
 
   useEffect(() => {
     fetchBooks();
-    fetchProfile(); // 프로필 정보 가져오기
+    fetchProfile();
   }, [fetchBooks, fetchProfile, selected, refreshKey]);
 
-  // 모달 토글
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
-  // 책 클릭 시
   const handleBookPress = bookId => {
     navigation.navigate('BookRead', { profileId, bookId });
   };
 
-  // 즐겨찾기 토글
   const toggleFavorite = async bookId => {
     try {
       const response = await fetchWithAuth(
@@ -98,7 +95,6 @@ const BookShelf = () => {
     }
   };
 
-  // 책장 렌더링
   const renderShelf = shelfIndex => {
     const booksForShelf = books.slice(shelfIndex * 4, (shelfIndex + 1) * 4);
 

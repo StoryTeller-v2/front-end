@@ -39,7 +39,6 @@ const YesNoModal = ({
         console.log('Response status:', response.status);
 
         if (response.status === 200) {
-          // 페이지 저장이 성공적으로 완료되었을 때 BookShelf 페이지로 이동
           navigation.reset({
             index: 0,
             routes: [{ name: linkTo }],
@@ -67,13 +66,9 @@ const YesNoModal = ({
 
         if (response.ok && result.code === 'SUCCESS_DELETE_PROFILE') {
           Alert.alert('Success', '프로필이 성공적으로 삭제되었습니다.1');
-          // Close YesNoModal and EditProfileModal
-          onClose(); // Close YesNoModal
+          onClose();
           closeEditor();
           onProfileUpdate();
-          // onConfirm();
-          // Additional logic if needed for EditProfileModal
-          // You might want to ensure EditProfileModal is also closed if necessary
         } else {
           Alert.alert('Error', result.message || '프로필 삭제에 실패했습니다.');
         }
@@ -126,8 +121,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '28%',
     left: '30%',
-    elevation: 10, // Android shadow
-    shadowColor: '#000', // iOS shadow
+    elevation: 10,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,

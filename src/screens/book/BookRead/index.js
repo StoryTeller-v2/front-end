@@ -342,7 +342,7 @@ const BookRead = ({ navigation }) => {
     const cleanedWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').trim();
     const { pageY, pageX } = event.nativeEvent;
     setHighlightedWord(cleanedWord);
-    setHighlightModalPosition({ top: pageY - 57, left: pageX - 75 }); // 단어 위치 위로 모달 배치
+    setHighlightModalPosition({ top: pageY - 57, left: pageX - 75 });
     setHighlightModalVisible(true);
   };
 
@@ -366,7 +366,7 @@ const BookRead = ({ navigation }) => {
         Alert.alert('Error', '단어 저장 실패');
       } else {
         const result = await response.json();
-        console.log(result); // 저장된 단어 결과 확인
+        console.log(result);
         const newHighlightedWord = {
           word: highlightedWord,
           id: result.data.unknownwordId,

@@ -9,6 +9,7 @@ import {
   Modal,
   Platform,
   FlatList,
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import YesNoModal from '../common/YesNoModal';
@@ -72,7 +73,7 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
 
   const handleSaveProfile = async () => {
     if (!name || !birthdate || !pin) {
-      alert('모든 필드를 입력해주세요.');
+      Alert.alert('모든 항목을 입력해주세요.');
       return;
     }
 
@@ -104,11 +105,11 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
         onClose();
       } else {
         console.error('프로필 생성 실패:', result.message);
-        alert(result.message);
+        Alert.alert('Error', result.message);
       }
     } catch (error) {
       console.error('프로필 생성 중 오류 발생:', error);
-      alert('프로필 생성 중 오류가 발생했습니다.');
+      Alert.alert('Error', '프로필 생성 중 오류가 발생했습니다.');
     }
   };
 
@@ -249,7 +250,7 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
         isVisible={showYesNoModal}
         onClose={() => setShowYesNoModal(false)}
         title="정말 나가시겠습니까?"
-        subtitle={`나가시면 작성하신 프로필의 정보는 \n 저장되지 않습니다.`}
+        subtitle={'나가시면 작성하신 프로필의 정보는 \n 저장되지 않습니다.'}
         buttonText1="확인"
         buttonText2="취소"
         onConfirm={handleConfirm}
