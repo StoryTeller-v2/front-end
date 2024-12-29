@@ -11,14 +11,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { AuthProvider } from './src/context/AuthContext';
 
-import Login from './src/screens/Login';
-import Signin from './src/screens/Signin';
-import BookShelf from './src/screens/BookShelf';
-import BookRead from './src/screens/BookRead';
-import Quiz from './src/screens/Quiz';
-import Profile from './src/screens/Profile';
-import Question from './src/screens/Question';
-import QuizEnd from './src/screens/QuizEnd';
+import Login from './src/screens/auth/Login';
+import Signin from './src/screens/auth/Signin';
+import BookShelf from './src/screens/book/BookShelf';
+import BookRead from './src/screens/book/BookRead';
+import Quiz from './src/screens/book/Quiz';
+import Profile from './src/screens/profile/Profile';
+import Question from './src/screens/question/Quistion';
+import QuizEnd from './src/screens/book/QuizEnd';
 import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {

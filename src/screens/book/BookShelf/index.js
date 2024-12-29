@@ -2,11 +2,12 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {Image, View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import VoiceInputModal from '../components/modals/VoiceInputModal';
-import fetchWithAuth from '../api/fetchWithAuth';
+import VoiceInputModal from '../../../components/modals/VoiceInputModal';
+import fetchWithAuth from '../../../api/fetchWithAuth';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import {useAuth} from '../context/AuthContext';
+import {useAuth} from '../../../context/AuthContext';
+import { styles } from './styles';
 
 const BookShelf = () => {
   const [selected, setSelected] = useState('ALL');
@@ -104,7 +105,7 @@ const BookShelf = () => {
     return (
       <View key={shelfIndex} style={styles.shelfContainer}>
         <Image
-          source={require('../../assets/images/shelf.png')}
+          source={require('../../../../assets/images/shelf.png')}
           style={styles.shelf}
         />
         {booksForShelf.map((book, index) => (
@@ -172,7 +173,7 @@ const BookShelf = () => {
           <Image source={{uri: imageUrl}} style={styles.squareButtonImage} />
         ) : (
           <Image
-            source={require('../../assets/images/temp_profile_pic.png')} // 기본 이미지
+            source={require('../../../../assets/images/temp_profile_pic.png')} // 기본 이미지
             style={styles.squareButtonImage}
           />
         )}
@@ -184,7 +185,7 @@ const BookShelf = () => {
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}>
           <Image
-            source={require('../../assets/images/drawing.png')}
+            source={require('../../../../assets/images/drawing.png')}
             style={styles.roundButtonImage}
           />
         </LinearGradient>
@@ -223,141 +224,5 @@ const RadioButton = ({title, selected, onPress, style, textStyle}) => (
     )}
   </TouchableOpacity>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 30,
-    backgroundColor: '#FBF7EC',
-  },
-  radioContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '50%',
-    marginBottom: 25,
-    paddingTop: 10,
-  },
-  radioButton: {
-    flex: 1,
-    marginHorizontal: 10,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  radioButtonAll: {
-    marginRight: -35,
-    paddingHorizontal: 15,
-    width: 90,
-    height: 45,
-  },
-  radioButtonFavorite: {
-    marginLeft: -25,
-    paddingHorizontal: 15,
-    width: 180,
-    height: 45,
-  },
-  radioButtonReading: {
-    marginLeft: -65,
-    paddingHorizontal: 15,
-    width: 170,
-    height: 45,
-  },
-  radioButtonGradient: {
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  selected: {
-    borderWidth: 0,
-    borderColor: '#FF8C43',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-  },
-  radioButtonText: {
-    color: '#C3C3C3',
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-  radioButtonTextAll: {},
-  radioButtonTextFavorite: {},
-  radioButtonTextReading: {},
-  radioButtonTextSelected: {
-    color: '#000',
-  },
-  shelfWrapper: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    width: '100%',
-    marginTop: 100,
-  },
-  shelfContainer: {
-    width: '100%',
-    marginBottom: 70,
-    position: 'relative',
-  },
-  shelf: {
-    width: '100%',
-    height: 100,
-    resizeMode: 'contain',
-    top: 20,
-  },
-  bookButton: {
-    position: 'absolute',
-    top: -68,
-  },
-  bookImage: {
-    width: 140,
-    height: 130,
-    resizeMode: 'contain',
-  },
-  favoriteButton: {
-    position: 'absolute',
-    bottom: 5,
-    left: 5,
-    backgroundColor: 'transparent',
-  },
-  squareButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    width: 110,
-    height: 110,
-    borderRadius: 30,
-    backgroundColor: '#EFEFEF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  squareButtonImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-    borderRadius: 30,
-  },
-  roundButton: {
-    position: 'absolute',
-    bottom: 5,
-    alignSelf: 'center',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  roundButtonGradient: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  roundButtonImage: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
-  },
-});
 
 export default BookShelf;

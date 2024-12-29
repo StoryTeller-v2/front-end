@@ -8,11 +8,12 @@ import {
   BackHandler,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AddProfileModal from '../components/modals/AddProfileModal';
-import SelectPinInputModal from '../components/modals/SelectPinInputModal';
-import EditPinInputModal from '../components/modals/EditPinInputModal';
-import {useAuth} from '../context/AuthContext';
-import fetchWithAuth from '../api/fetchWithAuth';
+import AddProfileModal from '../../../components/modals/AddProfileModal';
+import SelectPinInputModal from '../../../components/modals/SelectPinInputModal';
+import EditPinInputModal from '../../../components/modals/EditPinInputModal';
+import {useAuth} from '../../../context/AuthContext';
+import fetchWithAuth from '../../../api/fetchWithAuth';
+import { styles } from './styles';
 
 const Profile = ({navigation, route}) => {
   const {userId} = route.params || {};
@@ -94,7 +95,7 @@ const Profile = ({navigation, route}) => {
           {isChangingProfile && (
             <View style={styles.overlay}>
               <Image
-                source={require('../../assets/images/pen.png')}
+                source={require('../../../../assets/images/pen.png')}
                 style={styles.profilepenIcon}
               />
             </View>
@@ -153,7 +154,7 @@ const Profile = ({navigation, route}) => {
         ]}
         onPress={changeProfileText}>
         <Image
-          source={require('../../assets/images/pen.png')}
+          source={require('../../../../assets/images/pen.png')}
           style={styles.penIcon}
         />
         <Text
@@ -187,112 +188,5 @@ const Profile = ({navigation, route}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FBF7EC',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  header: {
-    fontSize: 37,
-    marginBottom: 50,
-    marginTop: 160,
-    color: '#393939',
-    fontWeight: '800',
-  },
-  profilesContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    marginTop: 30,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    margin: 10,
-  },
-  profileButton: {
-    width: 150,
-    height: 150,
-    backgroundColor: 'lightblue',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
-  },
-  profileButtonActive: {
-    opacity: 0.6,
-  },
-  profileImage: {
-    width: '110%',
-    height: '114%',
-    resizeMode: 'cover',
-  },
-  profileText: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#545454',
-    textAlign: 'center',
-    marginTop: 5,
-  },
-  addButton: {
-    width: 150,
-    height: 150,
-    backgroundColor: '#FCAE59',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
-  },
-  plus: {
-    fontSize: 110,
-    fontWeight: 'bold',
-    color: '#FF8B42',
-    textAlign: 'center',
-  },
-  changeProfileButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    backgroundColor: 'transparent',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  changeProfileButtonText: {
-    fontSize: 18,
-    fontWeight: '900',
-  },
-  penIcon: {
-    width: 24,
-    height: 24,
-    tintColor: '#393939',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profilepenIcon: {
-    width: 70,
-    height: 70,
-    tintColor: '#FFFFFF',
-  },
-});
 
 export default Profile;
