@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">StoryTeller</string>
+     <string name="kakao_app_key">727d4ab6718fd5f2274bb729df8f3385</string>
+    <string name="kakao_scheme">kakao727d4ab6718fd5f2274bb729df8f3385</string>
+</resources>

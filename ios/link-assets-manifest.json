@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/TAEBAEKfont.otf",
+      "sha1": "f85113177dd471e5cf76f6b9138815f47f7317f3"
+    },
+    {
+      "path": "assets/fonts/TAEBAEKmilkyway.otf",
+      "sha1": "81261be43b449daa788996d333a293ba795a490e"
+    }
+  ]
+}
