@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,8 +11,8 @@ import {
   AppState,
   ActivityIndicator,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import ProgressBar from '../../../components/book/ProgressBar.js';
 import SettingModal from '../../../components/modals/SettingModal.js';
@@ -21,12 +21,12 @@ import NextStep from '../../../components/book/NextStep.js';
 import BookBg from '../../../../assets/images/bookBg.png';
 import fetchWithAuth from '../../../api/fetchWithAuth.js';
 import Tts from 'react-native-tts';
-import {WebView} from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import { styles } from './styles';
 
-const BookRead = ({navigation}) => {
+const BookRead = ({ navigation }) => {
   const route = useRoute();
-  const {profileId, bookId} = route.params;
+  const { profileId, bookId } = route.params;
 
   const [title, setTitle] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -154,17 +154,17 @@ const BookRead = ({navigation}) => {
       console.log('설정 세부정보 응답', result);
 
       if (response.status === 200) {
-        const {fontSize, readingSpeed} = result.data;
+        const { fontSize, readingSpeed } = result.data;
         setInitialSpeed(
           readingSpeed === 'SLOW'
             ? '0.5배속'
             : readingSpeed === 'SLIGHTLY_SLOW'
-            ? '0.75배속'
-            : readingSpeed === 'NORMAL'
-            ? '1.0배속'
-            : readingSpeed === 'SLIGHTLY_FAST'
-            ? '1.25배속'
-            : '1.5배속',
+              ? '0.75배속'
+              : readingSpeed === 'NORMAL'
+                ? '1.0배속'
+                : readingSpeed === 'SLIGHTLY_FAST'
+                  ? '1.25배속'
+                  : '1.5배속',
         );
         setInitialSize(fontSize);
         setFontSize(
@@ -246,7 +246,6 @@ const BookRead = ({navigation}) => {
     setNextStepVisible(false);
     setIsTtsFinished(false);
 
-
     return () => {
       finishListener.remove();
     };
@@ -274,7 +273,6 @@ const BookRead = ({navigation}) => {
       return () => {
         Tts.stop();
         setNextStepVisible(false);
-
       };
     }, []),
   );
@@ -342,9 +340,9 @@ const BookRead = ({navigation}) => {
   const handleLongPress = (word, event) => {
     if (!isTtsFinished) return;
     const cleanedWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').trim();
-    const {pageY, pageX} = event.nativeEvent;
+    const { pageY, pageX } = event.nativeEvent;
     setHighlightedWord(cleanedWord);
-    setHighlightModalPosition({top: pageY - 57, left: pageX - 75}); // 단어 위치 위로 모달 배치
+    setHighlightModalPosition({ top: pageY - 57, left: pageX - 75 }); // 단어 위치 위로 모달 배치
     setHighlightModalVisible(true);
   };
 
@@ -426,7 +424,7 @@ const BookRead = ({navigation}) => {
 
     if (cleanedWord === '') {
       return (
-        <Text key={index} style={[styles.bookText, {fontSize}]}>
+        <Text key={index} style={[styles.bookText, { fontSize }]}>
           {word}
         </Text>
       );
@@ -435,13 +433,15 @@ const BookRead = ({navigation}) => {
       <TouchableOpacity
         key={index}
         onPress={() => handleWordClick(cleanedWord)}
-        onLongPress={event => handleLongPress(cleanedWord, event)}>
+        onLongPress={event => handleLongPress(cleanedWord, event)}
+      >
         <Text
           style={[
             styles.bookText,
-            {fontSize},
+            { fontSize },
             isHighlighted && styles.highlightedText,
-          ]}>
+          ]}
+        >
           {word}
         </Text>
       </TouchableOpacity>
@@ -484,7 +484,7 @@ const BookRead = ({navigation}) => {
           </View>
         ) : (
           <>
-            <ImageBackground source={{uri: pageImage}} style={styles.page}>
+            <ImageBackground source={{ uri: pageImage }} style={styles.page}>
               <View style={styles.iconBox}>
                 <TouchableOpacity style={styles.icon} onPress={openYesNoModal}>
                   <Ionic name="home-outline" size={35} color="black" />
@@ -503,7 +503,8 @@ const BookRead = ({navigation}) => {
                 />
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={openSettingModal}>
+                  onPress={openSettingModal}
+                >
                   <Ionic name="settings-outline" size={35} color="black" />
                 </TouchableOpacity>
                 <SettingModal
@@ -531,7 +532,7 @@ const BookRead = ({navigation}) => {
 
             {nextStepVisible && (
               <>
-                <Animated.View style={[styles.wordBox, {opacity: blinkAnim}]}>
+                <Animated.View style={[styles.wordBox, { opacity: blinkAnim }]}>
                   <Text style={styles.wordText}>
                     Click on a word {'\n'} you don't know
                   </Text>
@@ -551,11 +552,13 @@ const BookRead = ({navigation}) => {
           visible={highlightModalVisible}
           transparent={true}
           animationType="fade"
-          onRequestClose={cancelHighlight}>
+          onRequestClose={cancelHighlight}
+        >
           <TouchableOpacity
             activeOpacity={1}
             onPress={handleModalBackgroundPress}
-            style={styles.modalBackground}>
+            style={styles.modalBackground}
+          >
             <View style={[styles.highlightModal, highlightModalPosition]}>
               <View style={styles.highlightModalButtons}>
                 <TouchableOpacity onPress={confirmHighlight}>
@@ -573,15 +576,17 @@ const BookRead = ({navigation}) => {
           visible={isWordModalVisible}
           transparent={true}
           animationType="slide"
-          onRequestClose={closeWordModal}>
+          onRequestClose={closeWordModal}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.webviewContainer}>
               <TouchableOpacity
                 style={styles.closeButton}
-                onPress={closeWordModal}>
+                onPress={closeWordModal}
+              >
                 <Ionic name="close" size={23} color="black" />
               </TouchableOpacity>
-              <WebView source={{uri: wordUrl}} />
+              <WebView source={{ uri: wordUrl }} />
             </View>
           </View>
         </Modal>

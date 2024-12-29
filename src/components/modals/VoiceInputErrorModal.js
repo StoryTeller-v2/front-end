@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   View,
   Modal,
@@ -12,14 +12,9 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
-const VoiceInputErrorModal = ({
-  visible,
-  onClose,
-  onKeyboardInput,
-  onRetry,
-}) => {
+const VoiceInputErrorModal = ({ visible, onClose, onKeyboardInput, onRetry }) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
 
   useEffect(() => {
@@ -49,8 +44,9 @@ const VoiceInputErrorModal = ({
           <Animated.View
             style={[
               styles.modalContainer,
-              {transform: [{translateY: slideAnim}]},
-            ]}>
+              { transform: [{ translateY: slideAnim }] },
+            ]}
+          >
             <View style={styles.modalContent}>
               <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                 <Text style={styles.closeButtonText}>X</Text>
@@ -64,12 +60,14 @@ const VoiceInputErrorModal = ({
               <View style={styles.buttonContainer}>
                 <LinearGradient
                   colors={['#2170CD', '#8FA0E8']}
-                  start={{x: 0, y: 0.5}}
-                  end={{x: 1, y: 0.5}}
-                  style={styles.gradientButton}>
+                  start={{ x: 0, y: 0.5 }}
+                  end={{ x: 1, y: 0.5 }}
+                  style={styles.gradientButton}
+                >
                   <TouchableOpacity
                     onPress={onKeyboardInput}
-                    style={styles.roundButton}>
+                    style={styles.roundButton}
+                  >
                     <Image
                       source={require('../../../assets/images/keyboard.png')}
                       style={styles.buttonImage}
@@ -78,10 +76,14 @@ const VoiceInputErrorModal = ({
                 </LinearGradient>
                 <LinearGradient
                   colors={['#2170CD', '#8FA0E8']}
-                  start={{x: 0, y: 0.5}}
-                  end={{x: 1, y: 0.5}}
-                  style={[styles.gradientButton, styles.marginLeft]}>
-                  <TouchableOpacity onPress={onRetry} style={styles.roundButton}>
+                  start={{ x: 0, y: 0.5 }}
+                  end={{ x: 1, y: 0.5 }}
+                  style={[styles.gradientButton, styles.marginLeft]}
+                >
+                  <TouchableOpacity
+                    onPress={onRetry}
+                    style={styles.roundButton}
+                  >
                     <Image
                       source={require('../../../assets/images/microphone.png')}
                       style={styles.buttonImage}
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -125,24 +127,22 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 50,
-    marginBottom: 20, 
+    marginBottom: 20,
     alignItems: 'center',
   },
   boldText: {
     fontSize: 35,
     fontWeight: 'bold',
     color: '#000',
-    marginBottom: 15, 
+    marginBottom: 15,
     fontFamily: 'TAEBAEKfont',
-
   },
   lightText: {
     fontSize: 30,
     fontWeight: '300',
     textAlign: 'center',
-    lineHeight: 40, 
+    lineHeight: 40,
     fontFamily: 'TAEBAEKmilkyway',
-
   },
   closeButton: {
     position: 'absolute',

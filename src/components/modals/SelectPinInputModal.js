@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import fetchWithAuth from '../../api/fetchWithAuth';
 
-const SelectPinInputModal = ({visible, onClose, onPinCorrect, profileId}) => {
+const SelectPinInputModal = ({ visible, onClose, onPinCorrect, profileId }) => {
   const [pin, setPin] = useState(['', '', '', '']);
   const [selectedInput, setSelectedInput] = useState(null);
   const [error, setError] = useState('');
@@ -44,8 +44,8 @@ const SelectPinInputModal = ({visible, onClose, onPinCorrect, profileId}) => {
         `/profiles/${profileId}/pin-number/verifications`,
         {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({pinNumber: enteredPin}),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pinNumber: enteredPin }),
         },
       );
 
@@ -111,11 +111,13 @@ const SelectPinInputModal = ({visible, onClose, onPinCorrect, profileId}) => {
       transparent={true}
       animationType="slide"
       visible={visible}
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <KeyboardAvoidingView
         style={styles.modalContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+      >
         <View style={styles.modalContent}>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>X</Text>
@@ -205,13 +207,13 @@ const styles = StyleSheet.create({
     color: '#393939',
     fontWeight: '900',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
   },
   selectedPinInput: {
-    transform: [{scale: 1.1}],
+    transform: [{ scale: 1.1 }],
   },
 });
 

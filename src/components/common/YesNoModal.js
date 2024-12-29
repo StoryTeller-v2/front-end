@@ -1,7 +1,7 @@
-import {View, Text, StyleSheet, Modal, Alert} from 'react-native';
+import { View, Text, StyleSheet, Modal, Alert } from 'react-native';
 import React from 'react';
 import YesNoButton from './YesNoButton.js';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import fetchWithAuth from '../../api/fetchWithAuth.js';
 
 const YesNoModal = ({
@@ -42,7 +42,7 @@ const YesNoModal = ({
           // 페이지 저장이 성공적으로 완료되었을 때 BookShelf 페이지로 이동
           navigation.reset({
             index: 0,
-            routes: [{name: linkTo}],
+            routes: [{ name: linkTo }],
           });
         } else {
           Alert.alert(
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     left: '30%',
     elevation: 10, // Android shadow
     shadowColor: '#000', // iOS shadow
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },

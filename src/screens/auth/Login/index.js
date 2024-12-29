@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -12,8 +12,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useAuth} from '../../../context/AuthContext.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '../../../context/AuthContext.js';
 import Logo from '../../../../assets/images/logo.png';
 import Kakao from '../../../../assets/images/kakao.png';
 import Google from '../../../../assets/images/google.png';
@@ -36,10 +36,10 @@ import {
 } from '../../../utils/storage.js';
 import { styles } from './styles';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
-  const {login} = useAuth();
+  const { login } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
@@ -86,7 +86,7 @@ const Login = ({navigation}) => {
           console.log('Stored refresh token:', storedRefreshToken);
 
           // Profile 화면으로 이동하면서 id값을 전달
-          navigation.navigate('Profile', {userId: data.data.id});
+          navigation.navigate('Profile', { userId: data.data.id });
           console.log('전달할 데이터:', data.data.id);
         } else {
           console.error('Invalid tokens:', data);
@@ -113,7 +113,7 @@ const Login = ({navigation}) => {
       const profile = await kakaoGetProfile();
 
       if (token && profile) {
-        const {id, nickname, email} = profile;
+        const { id, nickname, email } = profile;
 
         const response = await fetch(`${Config.API_BASE_URL}/kakao-login`, {
           method: 'POST',
@@ -148,7 +148,7 @@ const Login = ({navigation}) => {
             console.log('Stored refresh token:', storedRefreshToken);
 
             // Profile 화면으로 이동하면서 id값을 전달
-            navigation.navigate('Profile', {userId: data.data.id});
+            navigation.navigate('Profile', { userId: data.data.id });
           } else {
             console.error('유효하지 않은 토큰:', data);
             Alert.alert('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
@@ -172,7 +172,7 @@ const Login = ({navigation}) => {
 
       const userInfo = await GoogleSignin.signIn();
 
-      const {idToken} = userInfo.data;
+      const { idToken } = userInfo.data;
 
       if (!idToken) {
         console.error('No idToken received', userInfo);
@@ -201,7 +201,7 @@ const Login = ({navigation}) => {
       console.log('Server response data:', data);
 
       if (response.ok && accessToken && refreshToken) {
-        const {nickname} = data.data;
+        const { nickname } = data.data;
 
         await storeTokens(accessToken, refreshToken);
         await storeUser(nickname);
@@ -214,7 +214,7 @@ const Login = ({navigation}) => {
         console.log('Stored Refresh Token:', refreshToken);
 
         // Profile 화면으로 이동하면서 id값을 전달
-        navigation.navigate('Profile', {userId: data.data.id});
+        navigation.navigate('Profile', { userId: data.data.id });
       } else {
         Alert.alert('구글 로그인 실패', '액세스 토큰을 받지 못했습니다.');
       }
@@ -241,11 +241,13 @@ const Login = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <ScrollView
           contentContainerStyle={styles.scrollViewContent}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.contentWrapper}>
             <Image source={Logo} style={styles.logo} />
 
@@ -290,7 +292,8 @@ const Login = ({navigation}) => {
               <View style={styles.socialButtonContainer}>
                 <TouchableOpacity
                   style={styles.socialButton}
-                  onPress={handleKakaoLogin}>
+                  onPress={handleKakaoLogin}
+                >
                   <Image source={Kakao} style={styles.icon} />
                   <Text style={styles.socialButtonText}>
                     카카오로 로그인하기
@@ -298,7 +301,8 @@ const Login = ({navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.socialButton}
-                  onPress={handleGoogleLogin}>
+                  onPress={handleGoogleLogin}
+                >
                   <Image source={Google} style={styles.icon} />
                   <Text style={styles.socialButtonText}>구글로 로그인하기</Text>
                 </TouchableOpacity>

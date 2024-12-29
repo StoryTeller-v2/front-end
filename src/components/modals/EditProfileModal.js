@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import YesNoModal from '../common/YesNoModal.js';
 import fetchWithAuth from '../../api/fetchWithAuth.js';
 import OkModal from '../common/OkModal.js';
 
-const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
+const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [pin, setPin] = useState('');
@@ -41,9 +41,8 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
     setDate(currentDate);
 
     let tempDate = new Date(currentDate);
-    let fDate = `${tempDate.getFullYear()}-${
-      tempDate.getMonth() + 1
-    }-${tempDate.getDate()}`;
+    let fDate = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1
+      }-${tempDate.getDate()}`;
     setBirthdate(fDate);
   };
 
@@ -76,7 +75,7 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
       const response = await fetchWithAuth(`/profiles/photos`, 'GET');
       const result = await response.json();
       if (result.status === 200 && result.code === 'SUCCESS_PROFILE_PHOTOS') {
-        setProfilePictures(result.data.map(pic => ({uri: pic.imageUrl})));
+        setProfilePictures(result.data.map(pic => ({ uri: pic.imageUrl })));
       }
     } catch (error) {
       console.error('Error fetching profile pictures:', error);
@@ -156,19 +155,21 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
         transparent={true}
         animationType="slide"
         visible={visible}
-        onRequestClose={onClose}>
+        onRequestClose={onClose}
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={handleCloseButtonPress}>
+              onPress={handleCloseButtonPress}
+            >
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
             <Text style={styles.modalHeader}>프로필 변경하기</Text>
             <Image
               source={
                 selectedProfilePic
-                  ? {uri: selectedProfilePic}
+                  ? { uri: selectedProfilePic }
                   : require('../../../assets/images/temp_profile_pic.png') // 기본 이미지를 사용하지 않음
               }
               style={styles.profileImage}
@@ -187,7 +188,8 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
             </View>
             <TouchableOpacity
               onPress={showDatepicker}
-              style={styles.inputWrapper}>
+              style={styles.inputWrapper}
+            >
               <TextInput
                 style={styles.input}
                 value={birthdate}
@@ -217,7 +219,8 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.saveButton}
-                onPress={handleSaveProfile}>
+                onPress={handleSaveProfile}
+              >
                 <Image
                   source={require('../../../assets/images/save.png')}
                   style={styles.saveIcon}
@@ -226,7 +229,8 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.saveButton}
-                onPress={handleDeleteProfile}>
+                onPress={handleDeleteProfile}
+              >
                 <Image
                   source={require('../../../assets/images/delete.png')}
                   style={styles.saveIcon}
@@ -243,7 +247,8 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
         transparent={true}
         animationType="slide"
         visible={showProfilePicModal}
-        onRequestClose={() => setShowProfilePicModal(false)}>
+        onRequestClose={() => setShowProfilePicModal(false)}
+      >
         <View style={styles.profilePicModalContainer}>
           <View style={styles.profilePicModalContent}>
             <Text style={styles.profilePicModalHeader}>
@@ -251,10 +256,11 @@ const EditProfileModal = ({visible, onClose, profileId, onProfileUpdate}) => {
             </Text>
             <FlatList
               data={profilePictures}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.profilePicItem}
-                  onPress={() => handleProfilePicSelect(item.uri)}>
+                  onPress={() => handleProfilePicSelect(item.uri)}
+                >
                   <Image source={item} style={styles.profilePic} />
                 </TouchableOpacity>
               )}

@@ -86,13 +86,16 @@ const Signin = ({ navigation }) => {
 
   const handleEmailVerificationRequest = async () => {
     try {
-      const response = await fetch(`${Config.API_BASE_URL}/emails/verification-requests`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${Config.API_BASE_URL}/emails/verification-requests`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
         },
-        body: JSON.stringify({ email }),
-      });
+      );
 
       const data = await response.json();
 
@@ -115,13 +118,16 @@ const Signin = ({ navigation }) => {
 
   const handleEmailVerificationCheck = async () => {
     try {
-      const response = await fetch(`${Config.API_BASE_URL}/emails/verifications`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${Config.API_BASE_URL}/emails/verifications`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, authCode: code }),
         },
-        body: JSON.stringify({ email, authCode: code }),
-      });
+      );
 
       const data = await response.json();
 
@@ -151,13 +157,16 @@ const Signin = ({ navigation }) => {
 
   const handleUsernameVerification = async () => {
     try {
-      const response = await fetch(`${Config.API_BASE_URL}/username/verifications`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${Config.API_BASE_URL}/username/verifications`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: user }),
         },
-        body: JSON.stringify({ username: user }),
-      });
+      );
 
       const data = await response.json();
 
@@ -165,19 +174,28 @@ const Signin = ({ navigation }) => {
         if (data.data.authResult) {
           setIsUsernameVerified(true);
           setModalTitle('아이디 인증에 성공했습니다');
-          setModalMessage('이 아이디는 사용이 가능합니다. \n이제 다른 정보를 입력해 주세요.');
+          setModalMessage(
+            '이 아이디는 사용이 가능합니다. \n이제 다른 정보를 입력해 주세요.',
+          );
         } else {
           setModalTitle('중복된 아이디입니다');
-          setModalMessage('이 아이디는 이미 사용 중입니다.\n다른 아이디를 시도해 주세요.');
+          setModalMessage(
+            '이 아이디는 이미 사용 중입니다.\n다른 아이디를 시도해 주세요.',
+          );
         }
       } else {
         setModalTitle('아이디 인증에 실패했습니다');
-        setModalMessage(data.message || '아이디 중복 확인 중 문제가 발생했어요.\n잠시 후 다시 시도해 주세요.');
+        setModalMessage(
+          data.message ||
+          '아이디 중복 확인 중 문제가 발생했어요.\n잠시 후 다시 시도해 주세요.',
+        );
       }
     } catch (error) {
       console.error(error);
       setModalTitle('문제가 발생했어요');
-      setModalMessage('아이디 중복 확인 중 오류가 발생했어요.\n다시 시도해 주세요.');
+      setModalMessage(
+        '아이디 중복 확인 중 오류가 발생했어요.\n다시 시도해 주세요.',
+      );
     } finally {
       setModalVisible(true);
     }
@@ -207,7 +225,7 @@ const Signin = ({ navigation }) => {
                 <Text style={styles.subTitle}>사용자 아이디</Text>
                 <View style={styles.shortInputContainer}>
                   <TextInput
-                    placeholder='아이디를 입력해주세요'
+                    placeholder="아이디를 입력해주세요"
                     value={user}
                     onChangeText={text => setUser(text)}
                     style={styles.inputShort}
@@ -225,7 +243,7 @@ const Signin = ({ navigation }) => {
                 <Text style={styles.subTitle}>이메일</Text>
                 <View style={styles.shortInputContainer}>
                   <TextInput
-                    placeholder='example@naver.com'
+                    placeholder="example@naver.com"
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.inputShort}
@@ -239,7 +257,7 @@ const Signin = ({ navigation }) => {
                 </View>
                 <View style={styles.shortInputContainer}>
                   <TextInput
-                    placeholder='인증번호를 입력해주세요'
+                    placeholder="인증번호를 입력해주세요"
                     value={code}
                     onChangeText={text => setCode(text)}
                     style={styles.inputShort}
@@ -256,14 +274,14 @@ const Signin = ({ navigation }) => {
               <View style={styles.inputContainer}>
                 <Text style={styles.subTitle}>비밀번호</Text>
                 <TextInput
-                  placeholder='비밀번호를 입력해주세요'
+                  placeholder="비밀번호를 입력해주세요"
                   value={password}
                   onChangeText={text => setPassword(text)}
                   style={styles.input}
                   secureTextEntry={true}
                 />
                 <TextInput
-                  placeholder='비밀번호를 확인해주세요'
+                  placeholder="비밀번호를 확인해주세요"
                   value={checkPW}
                   onChangeText={text => setCheckPW(text)}
                   style={styles.input}
@@ -272,10 +290,7 @@ const Signin = ({ navigation }) => {
               </View>
 
               <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleSignup}
-                >
+                <TouchableOpacity style={styles.button} onPress={handleSignup}>
                   <Text style={styles.buttonText}>회원가입</Text>
                 </TouchableOpacity>
               </View>

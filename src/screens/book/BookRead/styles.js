@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     width: '70.5%',
     height: '100%',
   },
-
   titleBox: {
     marginBottom: 20,
   },

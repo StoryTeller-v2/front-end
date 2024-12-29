@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback, useEffect} from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import {
 import fetchWithAuth from '../../api/fetchWithAuth';
 import EditProfileModal from './EditProfileModal';
 
-const EditPinInputModal = ({visible, onClose, profileId, onProfileUpdate}) => {
+const EditPinInputModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
   const [pin, setPin] = useState(['', '', '', '']);
   const [isEditProfileModalVisible, setIsEditProfileModalVisible] =
     useState(false);
@@ -61,14 +61,14 @@ const EditPinInputModal = ({visible, onClose, profileId, onProfileUpdate}) => {
         'Fetching with URL:',
         `/profiles/${profileId}/pin-number/verifications`,
       );
-      console.log('Request body:', JSON.stringify({pinNumber: enteredPin}));
+      console.log('Request body:', JSON.stringify({ pinNumber: enteredPin }));
 
       const response = await fetchWithAuth(
         `/profiles/${profileId}/pin-number/verifications`,
         {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({pinNumber: enteredPin}),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pinNumber: enteredPin }),
         },
       );
 
@@ -137,7 +137,8 @@ const EditPinInputModal = ({visible, onClose, profileId, onProfileUpdate}) => {
         transparent={true}
         animationType="slide"
         visible={visible}
-        onRequestClose={handleClose}>
+        onRequestClose={handleClose}
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
@@ -239,13 +240,13 @@ const styles = StyleSheet.create({
     color: '#393939',
     fontWeight: '900',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
   },
   selectedPinInput: {
-    transform: [{scale: 1.1}],
+    transform: [{ scale: 1.1 }],
   },
 });
 

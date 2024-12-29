@@ -31,7 +31,8 @@ const Quiz = () => {
           colors={['#FF8C43', '#F8C683']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={styles.button}>
+          style={styles.button}
+        >
           <TouchableOpacity style={styles.buttonContent} onPress={startQuiz}>
             <Text style={styles.buttonText}>→</Text>
           </TouchableOpacity>
@@ -41,7 +42,8 @@ const Quiz = () => {
             style={[
               styles.oval,
               { backgroundColor: '#DCDFE3', width: 60, borderRadius: 5 },
-            ]}></View>
+            ]}
+          ></View>
           <View
             style={[
               styles.oval,
@@ -51,7 +53,8 @@ const Quiz = () => {
                 borderRadius: 5,
                 marginLeft: 25,
               },
-            ]}></View>
+            ]}
+          ></View>
           <View
             style={[
               styles.oval,
@@ -61,7 +64,8 @@ const Quiz = () => {
                 borderRadius: 5,
                 marginLeft: 25,
               },
-            ]}></View>
+            ]}
+          ></View>
         </View>
       </View>
     </SafeAreaView>

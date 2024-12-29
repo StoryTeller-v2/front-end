@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState, useCallback} from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Voice from '@react-native-voice/voice';
 import VoiceInputErrorModal from './VoiceInputErrorModal';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const QuestionInputModal = ({
   visible,
@@ -125,20 +125,21 @@ const QuestionInputModal = ({
             <Animated.View
               style={[
                 styles.modalContainer,
-                {transform: [{translateY: slideAnim}]},
-              ]}>
+                { transform: [{ translateY: slideAnim }] },
+              ]}
+            >
               <View style={styles.modalContent}>
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                   <Text style={styles.closeButtonText}>X</Text>
                 </TouchableOpacity>
                 <View style={styles.textContainer}>
                   {transcribedText ? (
-                    <Text style={styles.transcribedText}>{transcribedText}</Text>
+                    <Text style={styles.transcribedText}>
+                      {transcribedText}
+                    </Text>
                   ) : (
                     <>
-                      <Text style={styles.boldText}>
-                        정답을 말해주세요
-                      </Text>
+                      <Text style={styles.boldText}>정답을 말해주세요</Text>
                       <Text style={styles.lightText}>
                         주변 소음이 들리지 않도록 해주세요
                       </Text>
@@ -153,12 +154,14 @@ const QuestionInputModal = ({
                 </View>
                 <LinearGradient
                   colors={['#2170CD', '#8FA0E8']}
-                  start={{x: 0, y: 0.5}}
-                  end={{x: 1, y: 0.5}}
-                  style={styles.gradientButton}>
+                  start={{ x: 0, y: 0.5 }}
+                  end={{ x: 1, y: 0.5 }}
+                  style={styles.gradientButton}
+                >
                   <TouchableOpacity
                     onPress={startRecording}
-                    style={styles.roundButton}>
+                    style={styles.roundButton}
+                  >
                     <Image
                       source={require('../../../assets/images/voice.png')}
                       style={styles.voiceImage}
@@ -207,7 +210,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

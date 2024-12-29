@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,14 +14,15 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import YesNoModal from '../common/YesNoModal';
 import fetchWithAuth from '../../api/fetchWithAuth';
 
-const AddProfileModal = ({visible, onClose, userId}) => {
+const AddProfileModal = ({ visible, onClose, userId }) => {
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [pin, setPin] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [showProfilePicModal, setShowProfilePicModal] = useState(false);
-  const [selectedProfilePic, setSelectedProfilePic] = useState('default_profile');
+  const [selectedProfilePic, setSelectedProfilePic] =
+    useState('default_profile');
   const [profilePictures, setProfilePictures] = useState([]);
   const [showYesNoModal, setShowYesNoModal] = useState(false);
 
@@ -55,7 +56,7 @@ const AddProfileModal = ({visible, onClose, userId}) => {
         { id: '1', uri: 'default_profile' },
         { id: '2', uri: 'profile_1' },
         { id: '3', uri: 'profile_2' },
-        { id: '4', uri: 'profile_3' }
+        { id: '4', uri: 'profile_3' },
       ];
       setProfilePictures(tempProfileImages);
     } catch (error) {
@@ -120,16 +121,19 @@ const AddProfileModal = ({visible, onClose, userId}) => {
     setShowYesNoModal(true);
   };
 
-  const getProfileImage = (imageUrl) => {
+  const getProfileImage = imageUrl => {
     // 이미지 매핑
     const imageMap = {
-      'default_profile': require('../../../assets/images/temp_profile_pic.png'),
-      'profile_1': require('../../../assets/images/temp_profile_pic.png'),
-      'profile_2': require('../../../assets/images/temp_profile_pic.png'),
-      'profile_3': require('../../../assets/images/temp_profile_pic.png'),
+      default_profile: require('../../../assets/images/temp_profile_pic.png'),
+      profile_1: require('../../../assets/images/temp_profile_pic.png'),
+      profile_2: require('../../../assets/images/temp_profile_pic.png'),
+      profile_3: require('../../../assets/images/temp_profile_pic.png'),
     };
 
-    return imageMap[imageUrl] || require('../../../assets/images/temp_profile_pic.png');
+    return (
+      imageMap[imageUrl] ||
+      require('../../../assets/images/temp_profile_pic.png')
+    );
   };
 
   return (
@@ -138,12 +142,14 @@ const AddProfileModal = ({visible, onClose, userId}) => {
         transparent={true}
         animationType="slide"
         visible={visible}
-        onRequestClose={onClose}>
+        onRequestClose={onClose}
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={handleCloseButtonPress}>
+              onPress={handleCloseButtonPress}
+            >
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
             <Text style={styles.modalHeader}>프로필 만들기</Text>
@@ -165,7 +171,8 @@ const AddProfileModal = ({visible, onClose, userId}) => {
             </View>
             <TouchableOpacity
               onPress={showDatepicker}
-              style={styles.inputWrapper}>
+              style={styles.inputWrapper}
+            >
               <TextInput
                 style={styles.input}
                 value={birthdate}
@@ -194,7 +201,8 @@ const AddProfileModal = ({visible, onClose, userId}) => {
             </View>
             <TouchableOpacity
               style={styles.saveButton}
-              onPress={handleSaveProfile}>
+              onPress={handleSaveProfile}
+            >
               <Image
                 source={require('../../../assets/images/save.png')}
                 style={styles.saveIcon}
@@ -209,7 +217,8 @@ const AddProfileModal = ({visible, onClose, userId}) => {
         transparent={true}
         animationType="slide"
         visible={showProfilePicModal}
-        onRequestClose={() => setShowProfilePicModal(false)}>
+        onRequestClose={() => setShowProfilePicModal(false)}
+      >
         <View style={styles.profilePicModalContainer}>
           <View style={styles.profilePicModalContent}>
             <Text style={styles.profilePicModalHeader}>
@@ -217,11 +226,15 @@ const AddProfileModal = ({visible, onClose, userId}) => {
             </Text>
             <FlatList
               data={profilePictures}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.profilePicItem}
-                  onPress={() => handleProfilePicSelect(item.uri)}>
-                  <Image source={getProfileImage(item.uri)} style={styles.profilePic} />
+                  onPress={() => handleProfilePicSelect(item.uri)}
+                >
+                  <Image
+                    source={getProfileImage(item.uri)}
+                    style={styles.profilePic}
+                  />
                 </TouchableOpacity>
               )}
               numColumns={4}
@@ -367,4 +380,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProfileModal
+export default AddProfileModal;

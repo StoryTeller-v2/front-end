@@ -1,9 +1,9 @@
 // AuthContext.js
-import React, {createContext, useContext, useState} from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileId, setProfileId] = useState(null);
 
@@ -21,7 +21,8 @@ export const AuthProvider = ({children}) => {
 
   return (
     <AuthContext.Provider
-      value={{isLoggedIn, login, logout, profileId, selectProfile}}>
+      value={{ isLoggedIn, login, logout, profileId, selectProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );

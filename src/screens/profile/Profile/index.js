@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,18 @@ import {
   StyleSheet,
   BackHandler,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AddProfileModal from '../../../components/modals/AddProfileModal';
 import SelectPinInputModal from '../../../components/modals/SelectPinInputModal';
 import EditPinInputModal from '../../../components/modals/EditPinInputModal';
-import {useAuth} from '../../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 import fetchWithAuth from '../../../api/fetchWithAuth';
 import { styles } from './styles';
 
-const Profile = ({navigation, route}) => {
-  const {userId} = route.params || {};
+const Profile = ({ navigation, route }) => {
+  const { userId } = route.params || {};
   console.log(`프로필 페이지의 유저 id: ${userId}`);
-  const {isLoggedIn, selectProfile} = useAuth();
+  const { isLoggedIn, selectProfile } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [isChangingProfile, setIsChangingProfile] = useState(false);
   const [isAddProfileModalVisible, setIsAddProfileModalVisible] =
@@ -33,7 +33,7 @@ const Profile = ({navigation, route}) => {
     try {
       const response = await fetchWithAuth(`/users/${userId}/profiles`, {
         method: 'GET',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
       });
 
       const result = await response.json();
@@ -61,7 +61,7 @@ const Profile = ({navigation, route}) => {
 
   const handlePinCorrect = () => {
     // PIN이 맞으면 BookShelf으로 이동하면서 프로필 ID를 전달
-    navigation.navigate('BookShelf', {profileId: selectedProfileId});
+    navigation.navigate('BookShelf', { profileId: selectedProfileId });
   };
 
   const handleProfilePress = profile => {
@@ -90,8 +90,9 @@ const Profile = ({navigation, route}) => {
             styles.profileButton,
             isChangingProfile && styles.profileButtonActive,
           ]}
-          onPress={() => handleProfilePress(profile)}>
-          <Image source={{uri: profile.imageUrl}} style={styles.profileImage} />
+          onPress={() => handleProfilePress(profile)}
+        >
+          <Image source={{ uri: profile.imageUrl }} style={styles.profileImage} />
           {isChangingProfile && (
             <View style={styles.overlay}>
               <Image
@@ -142,7 +143,8 @@ const Profile = ({navigation, route}) => {
         {!isChangingProfile && (
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => setIsAddProfileModalVisible(true)}>
+            onPress={() => setIsAddProfileModalVisible(true)}
+          >
             <Text style={styles.plus}>+</Text>
           </TouchableOpacity>
         )}
@@ -150,9 +152,10 @@ const Profile = ({navigation, route}) => {
       <TouchableOpacity
         style={[
           styles.changeProfileButton,
-          {borderColor: '#393939', borderWidth: 2},
+          { borderColor: '#393939', borderWidth: 2 },
         ]}
-        onPress={changeProfileText}>
+        onPress={changeProfileText}
+      >
         <Image
           source={require('../../../../assets/images/pen.png')}
           style={styles.penIcon}
@@ -160,8 +163,9 @@ const Profile = ({navigation, route}) => {
         <Text
           style={[
             styles.changeProfileButtonText,
-            {color: '#393939', marginLeft: 10},
-          ]}>
+            { color: '#393939', marginLeft: 10 },
+          ]}
+        >
           프로필 관리
         </Text>
       </TouchableOpacity>

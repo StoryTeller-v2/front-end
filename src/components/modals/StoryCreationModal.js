@@ -1,5 +1,5 @@
 // src/components/VoiceInputModal.js
-import React, {useRef, useEffect} from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,13 +12,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
-const StoryCreationModal = ({
-  visible,
-  onClose,
-  message1, message2,
-}) => {
+const StoryCreationModal = ({ visible, onClose, message1, message2 }) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
 
   useEffect(() => {
@@ -49,19 +45,16 @@ const StoryCreationModal = ({
             <Animated.View
               style={[
                 styles.modalContainer,
-                {transform: [{translateY: slideAnim}]},
-              ]}>
+                { transform: [{ translateY: slideAnim }] },
+              ]}
+            >
               <View style={styles.modalContent}>
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                   <Text style={styles.closeButtonText}>X</Text>
                 </TouchableOpacity>
                 <View style={styles.textContainer}>
-                  <Text style={styles.boldText}>
-                    {message1}
-                  </Text>
-                    <Text style={styles.lightText}>
-                    {message2}
-                    </Text>
+                  <Text style={styles.boldText}>{message1}</Text>
+                  <Text style={styles.lightText}>{message2}</Text>
                 </View>
                 <View style={styles.imageContainer}>
                   <Image
@@ -96,7 +89,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

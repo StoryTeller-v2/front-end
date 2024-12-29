@@ -1,5 +1,5 @@
 // src/components/VoiceInputModal.js
-import React, {useRef, useEffect, useState, useCallback} from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import Voice from '@react-native-voice/voice';
 import VoiceInputErrorModal from './VoiceInputErrorModal';
 import StoryGeneratorModal from './StoryGeneratorModal';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const VoiceInputModal = ({
   visible,
@@ -124,19 +124,18 @@ const VoiceInputModal = ({
             <Animated.View
               style={[
                 styles.modalContainer,
-                {transform: [{translateY: slideAnim}]},
-              ]}>
+                { transform: [{ translateY: slideAnim }] },
+              ]}
+            >
               <View style={styles.modalContent}>
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                   <Text style={styles.closeButtonText}>X</Text>
                 </TouchableOpacity>
                 <View style={styles.textContainer}>
-                  <Text style={styles.boldText}>
-                    {message}
+                  <Text style={styles.boldText}>{message}</Text>
+                  <Text style={styles.lightText}>
+                    주변 소음이 들리지 않도록 해주세요
                   </Text>
-                    <Text style={styles.lightText}>
-                        주변 소음이 들리지 않도록 해주세요
-                    </Text>
                 </View>
                 <View style={styles.imageContainer}>
                   <Image
@@ -146,12 +145,14 @@ const VoiceInputModal = ({
                 </View>
                 <LinearGradient
                   colors={['#2170CD', '#8FA0E8']}
-                  start={{x: 0, y: 0.5}}
-                  end={{x: 1, y: 0.5}}
-                  style={styles.gradientButton}>
+                  start={{ x: 0, y: 0.5 }}
+                  end={{ x: 1, y: 0.5 }}
+                  style={styles.gradientButton}
+                >
                   <TouchableOpacity
                     onPress={startRecording}
-                    style={styles.roundButton}>
+                    style={styles.roundButton}
+                  >
                     <Image
                       source={require('../../../assets/images/voice.png')}
                       style={styles.voiceImage}
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -226,14 +227,12 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 5,
     fontFamily: 'TAEBAEKfont',
-
   },
   lightText: {
     fontSize: 30,
     fontWeight: '300',
     textAlign: 'center',
     fontFamily: 'TAEBAEKmilkyway',
-
   },
   closeButton: {
     position: 'absolute',
