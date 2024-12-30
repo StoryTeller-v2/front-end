@@ -1,0 +1,70 @@
+import {StyleSheet} from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FBF7EC',
+  },
+  quizBox: {
+    width: 1000,
+    height: 400,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    marginBottom: 10,
+  },
+  quizText: {
+    fontSize: 33,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#393939',
+    fontFamily: 'TAEBAEKfont',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  button: {
+    width: 120,
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 60,
+  },
+  gradient: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 60,
+  },
+  icon: {
+    width: 60,
+    height: 60,
+  },
+  goodJobContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  goodJobImage: {
+    width: 800,
+    height: 800,
+  },
+});
