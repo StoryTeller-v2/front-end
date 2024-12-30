@@ -17,7 +17,7 @@ import BookShelf from './src/screens/book/BookShelf';
 import BookRead from './src/screens/book/BookRead';
 import Quiz from './src/screens/book/Quiz';
 import Profile from './src/screens/profile/Profile';
-import Question from './src/screens/question/Quistion';
+import Question from './src/screens/question/Question';
 import QuizEnd from './src/screens/book/QuizEnd';
 import SplashScreen from 'react-native-splash-screen';
 
