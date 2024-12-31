@@ -17,26 +17,20 @@ const BookShelf = () => {
   const [imageUrl, setImageUrl] = useState('');
 
   const { profileId } = useAuth();
-  console.log(`메인 페이지의 프로필 id: ${profileId}`);
   const navigation = useNavigation();
 
   // 책 목록 가져오기
   const fetchBooks = useCallback(async () => {
     try {
-      let endpoint = `/books/booklist?profileId=${profileId}`;
+      let endpoint = `/profiles/${profileId}/books`;
       if (selected === 'FAVORITE') {
-        endpoint = `/books/favorites?profileId=${profileId}`;
+        endpoint = `/profiles/${profileId}/books/favorites`;
       } else if (selected === 'READING') {
-        endpoint = `/books/reading?profileId=${profileId}`;
+        endpoint = `/profiles/${profileId}/books/reading`;
       }
       const response = await fetchWithAuth(endpoint, { method: 'GET' });
       const result = await response.json();
-      if (
-        result.status === 200 &&
-        (result.code === 'SUCCESS_RETRIEVE_BOOKS' ||
-          result.code === 'SUCCESS_RETRIEVE_FAVORITE_BOOKS' ||
-          result.code === 'SUCCESS_RETRIEVE_READING_BOOKS')
-      ) {
+      if ( result.status === 200 ) {
         setBooks(result.data);
       }
     } catch (error) {
@@ -51,7 +45,7 @@ const BookShelf = () => {
         method: 'GET',
       });
       const result = await response.json();
-      if (result.status === 200 && result.code === 'SUCCESS_GET_PROFILE') {
+      if ( result.status === 200 ) {
         setImageUrl(result.data.imageUrl);
       }
     } catch (error) {
@@ -75,13 +69,13 @@ const BookShelf = () => {
   const toggleFavorite = async bookId => {
     try {
       const response = await fetchWithAuth(
-        `/books/favorite?profileId=${profileId}&bookId=${bookId}`,
+        `/profiles/${profileId}/books/${bookId}/favorite`,
         {
           method: 'PUT',
         },
       );
       const result = await response.json();
-      if (result.status === 200 && result.code === 'SUCCESS_UPDATE_FAVORITE') {
+      if ( result.status === 200 ) {
         setBooks(prevBooks =>
           prevBooks.map(book =>
             book.bookId === bookId
@@ -168,11 +162,11 @@ const BookShelf = () => {
           navigation.navigate('Profile');
         }}
       >
-        {imageUrl ? ( // imageUrl이 있으면 해당 이미지 사용
+        {imageUrl ? (
           <Image source={{ uri: imageUrl }} style={styles.squareButtonImage} />
         ) : (
           <Image
-            source={require('../../../../assets/images/temp_profile_pic.png')} // 기본 이미지
+            source={require('../../../../assets/images/temp_profile_pic.png')}
             style={styles.squareButtonImage}
           />
         )}
