@@ -121,6 +121,8 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
         setSelectedProfilePic(null);
         setDate(new Date());
         onClose();
+      } else if (result.status === 404) {
+        Alert.alert('프로필 생성 실패', '유저 정보를 찾을 수 없습니다.');
       } else {
         console.error('프로필 생성 실패:', result.message);
       }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Modal,
   FlatList,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import YesNoModal from '../common/YesNoModal.js';
@@ -55,11 +56,11 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
     setShowProfilePicModal(false);
   };
 
-  const fetchProfileData = async () => {
+  const fetchProfileData = useCallback(async () => {
     try {
       const response = await fetchWithAuth(`/profiles/${profileId}`, 'GET');
       const result = await response.json();
-      if (result.status === 200 && result.code === 'SUCCESS_GET_PROFILE') {
+      if (result.status === 200) {
         setProfileData(result.data);
         setName(result.data.name);
         setBirthdate(result.data.birthDate);
@@ -68,13 +69,13 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
     } catch (error) {
       console.error('Error fetching profile data:', error);
     }
-  };
+  }, [profileId]);
 
   const fetchProfilePictures = async () => {
     try {
-      const response = await fetchWithAuth(`/profiles/photos`, 'GET');
+      const response = await fetchWithAuth('/profiles/photos', 'GET');
       const result = await response.json();
-      if (result.status === 200 && result.code === 'SUCCESS_PROFILE_PHOTOS') {
+      if (result.status === 200) {
         setProfilePictures(result.data.map(pic => ({ uri: pic.imageUrl })));
       }
     } catch (error) {
@@ -87,7 +88,7 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
       fetchProfileData();
       fetchProfilePictures();
     }
-  }, [visible]);
+  }, [visible, fetchProfileData]);
 
   const handleSaveProfile = async () => {
     if (!name || !birthdate || !pin) {
@@ -122,7 +123,7 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
 
       const result = await response.json();
 
-      if (result.status === 200 && result.code === 'SUCCESS_UPDATE_PROFILE') {
+      if (result.status === 200) {
         onProfileUpdate();
         onClose();
       } else {
@@ -241,7 +242,6 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
         </View>
       </Modal>
 
-      {/* ProfilePicModal */}
       <Modal
         transparent={true}
         animationType="slide"
