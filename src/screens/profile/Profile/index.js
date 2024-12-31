@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  StyleSheet,
   BackHandler,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,15 +20,13 @@ const Profile = ({ navigation, route }) => {
   const { isLoggedIn, selectProfile } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [isChangingProfile, setIsChangingProfile] = useState(false);
-  const [isAddProfileModalVisible, setIsAddProfileModalVisible] =
-    useState(false);
+  const [isAddProfileModalVisible, setIsAddProfileModalVisible] = useState(false);
   const [isPinInputModalVisible, setIsPinInputModalVisible] = useState(false);
-  const [isEditPinInputModalVisible, setIsEditPinInputModalVisible] =
-    useState(false);
+  const [isEditPinInputModalVisible, setIsEditPinInputModalVisible] = useState(false);
   const [modalType, setModalType] = useState('');
   const [selectedProfileId, selectProfileId] = useState(null);
 
-  const fetchProfiles = async () => {
+  const fetchProfiles = useCallback(async () => {
     try {
       const response = await fetchWithAuth(`/users/${userId}/profiles`, {
         method: 'GET',
@@ -37,26 +34,25 @@ const Profile = ({ navigation, route }) => {
       });
 
       const result = await response.json();
-      if (
-        response.status === 200 &&
-        result.code === 'SUCCESS_GET_PROFILE_LIST'
-      ) {
+      if (response.status === 200) {
         setProfiles(result.data);
+      } else if (response.status === 404) {
+        console.error('프로필을 가져오는 데 실패했습니다:', result.message);
       } else {
         console.error('프로필을 가져오는 데 실패했습니다:', result.message);
       }
     } catch (error) {
       console.error('프로필을 가져오는 데 실패했습니다:', error);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
     fetchProfiles();
-  }, []);
+  }, [fetchProfiles]);
 
   const handleAddProfileModalClose = () => {
     setIsAddProfileModalVisible(false);
-    fetchProfiles(); 
+    fetchProfiles();
   };
 
   const handlePinCorrect = () => {
@@ -67,18 +63,18 @@ const Profile = ({ navigation, route }) => {
     if (isChangingProfile) {
       setModalType('edit');
       selectProfile(profile.id);
-      selectProfileId(profile.id); 
+      selectProfileId(profile.id);
       setIsEditPinInputModalVisible(true);
     } else {
       setModalType('select');
       selectProfile(profile.id);
-      selectProfileId(profile.id); 
+      selectProfileId(profile.id);
       setIsPinInputModalVisible(true);
     }
   };
 
   const handleProfileUpdate = () => {
-    fetchProfiles(); 
+    fetchProfiles();
   };
 
   const renderProfiles = () => {
@@ -177,16 +173,16 @@ const Profile = ({ navigation, route }) => {
       <SelectPinInputModal
         visible={isPinInputModalVisible && modalType === 'select'}
         onClose={() => setIsPinInputModalVisible(false)}
-        onPinCorrect={handlePinCorrect} 
-        profileId={selectedProfileId} 
-        onProfileUpdate={handleProfileUpdate} 
+        onPinCorrect={handlePinCorrect}
+        profileId={selectedProfileId}
+        onProfileUpdate={handleProfileUpdate}
       />
       <EditPinInputModal
         visible={isEditPinInputModalVisible}
         onClose={() => setIsEditPinInputModalVisible(false)}
         onPinCorrect={handlePinCorrect}
-        profileId={selectedProfileId} 
-        onProfileUpdate={handleProfileUpdate} 
+        profileId={selectedProfileId}
+        onProfileUpdate={handleProfileUpdate}
       />
     </SafeAreaView>
   );
