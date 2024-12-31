@@ -48,7 +48,7 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
   };
 
   const handleProfilePicSelect = pic => {
-    setSelectedProfilePic(pic.uri);
+    setSelectedProfilePic({ uri: pic });
     setShowProfilePicModal(false);
   };
 
@@ -60,7 +60,6 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
       const result = await response.json();
 
       if (result.status === 200) {
-        console.log('Fetched profile pictures:', result.data);
         const fetchedPictures = result.data.map((item, index) => ({
           id: index.toString(),
           uri: item.imageUrl,
@@ -68,9 +67,11 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
         setProfilePictures(fetchedPictures);
 
         if (fetchedPictures.length > 0) {
-          setDefaultProfilePic(fetchedPictures[0].uri);
+          setDefaultProfilePic({ uri: fetchedPictures[0].uri });
         } else {
-          setDefaultProfilePic(require('../../../assets/images/temp_profile_pic.png'));
+          setDefaultProfilePic(
+            require('../../../assets/images/temp_profile_pic.png')
+          );
         }
       } else {
         console.error('Failed to fetch profile pictures:', result.message);
@@ -155,15 +156,15 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
             </TouchableOpacity>
             <Text style={styles.modalHeader}>프로필 만들기</Text>
             <Image
-              source={
-                selectedProfilePic
-                  ? { uri: selectedProfilePic }
-                  : typeof defaultProfilePic === 'string'
-                    ? { uri: defaultProfilePic }
-                    : defaultProfilePic
-              }
-              style={styles.profileImage}
-            />
+            source={
+              selectedProfilePic
+                ? selectedProfilePic
+                : typeof defaultProfilePic === 'string'
+                  ? { uri: defaultProfilePic }
+                  : defaultProfilePic
+            }
+            style={styles.profileImage}
+          />
             <TouchableOpacity onPress={() => setShowProfilePicModal(true)}>
               <Text style={styles.changeText}>변경</Text>
             </TouchableOpacity>
@@ -245,7 +246,6 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
               keyExtractor={item => item.id}
               contentContainerStyle={styles.profilePicListContainer}
             />
-
           </View>
         </View>
       </Modal>
