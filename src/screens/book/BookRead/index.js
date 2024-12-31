@@ -90,10 +90,10 @@ const BookRead = ({ navigation }) => {
   }, [profileId, bookId]);
 
   // 페이지 세부정보 조회
-  const fetchPageDetails = async pageNumber => {
+  const fetchPageDetails = async pageNum => {
     try {
       const response = await fetchWithAuth(
-        `/pages/detail?profileId=${profileId}&bookId=${bookId}&pageNum=${pageNumber}`,
+        `/profiles/${profileId}/books/${bookId}/pages/${pageNum}`,
       );
       const result = await response.json();
 
@@ -109,7 +109,7 @@ const BookRead = ({ navigation }) => {
             id: word.unknownWordId,
           })),
         ); // 페이지에 포함된 모르는 단어들을 하이라이트 표시
-        setCurrentPage(pageNumber);
+        setCurrentPage(pageNum);
       } else {
         Alert.alert('Error', '페이지 세부정보 불러오기 실패');
       }
@@ -123,7 +123,7 @@ const BookRead = ({ navigation }) => {
   const fetchBookDetails = async () => {
     try {
       const response = await fetchWithAuth(
-        `/books/detail?profileId=${profileId}&bookId=${bookId}`,
+        `/profiles/${profileId}/books/${bookId}`,
       );
       const result = await response.json();
       console.log('책 세부정보 응답', result);
@@ -148,7 +148,7 @@ const BookRead = ({ navigation }) => {
   const fetchSettings = async () => {
     try {
       const response = await fetchWithAuth(
-        `/settings/detail?profileId=${profileId}&bookId=${bookId}`,
+        `/profiles/${profileId}/books/${bookId}/settings`,
       );
       const result = await response.json();
       console.log('설정 세부정보 응답', result);
@@ -348,34 +348,38 @@ const BookRead = ({ navigation }) => {
 
   const confirmHighlight = async () => {
     try {
-      const response = await fetchWithAuth(
-        `/unknownwords/create?profileId=${profileId}&bookId=${bookId}&pageNum=${currentPage}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            unknownWord: highlightedWord,
-            position: highlightedWords.length + 1,
-          }),
+      const response = await fetchWithAuth(`/unknownwords`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          profileId: profileId,
+          bookId: bookId,
+          pageNum: currentPage,
+          unknownWord: highlightedWord,
+          position: highlightedWords.length + 1,
+        }),
+      });
 
-      if (response.status !== 200) {
-        Alert.alert('Error', '단어 저장 실패');
-      } else {
-        const result = await response.json();
-        console.log(result);
+      const result = await response.json();
+
+      if (response.status === 201) {
         const newHighlightedWord = {
           word: highlightedWord,
-          id: result.data.unknownwordId,
+          id: result.data.unknownWordId,
         };
+
         setHighlightedWords(prev => [...prev, newHighlightedWord]);
+
         setHighlightModalVisible(false);
+        setHighlightedWord(null);
+      } else {
+        Alert.alert('Error', '단어 저장 실패: 서버에서 실패 응답을 받음');
       }
     } catch (error) {
-      Alert.alert('Error', '단어 저장 실패');
+      console.error('단어 저장 실패:', error);
+      Alert.alert('Error', '단어 저장 중 오류 발생');
     }
   };
 
@@ -387,27 +391,25 @@ const BookRead = ({ navigation }) => {
     if (highlightedWordObj) {
       try {
         const response = await fetchWithAuth(
-          `/unknownwords/delete/${highlightedWordObj.id}`,
+          `/unknownwords/${highlightedWordObj.id}`,
           {
             method: 'DELETE',
           },
         );
 
-        if (response.status !== 200) {
-          const result = await response.json();
-          console.log('단어 삭제 실패:', result);
-          Alert.alert('Error', '단어 삭제 실패');
-        } else {
-          console.log(await response.json());
+        if (response.status === 200) {
           setHighlightedWords(prev =>
             prev.filter(item => item.word !== highlightedWord),
           );
+
           setHighlightedWord(null);
           setHighlightModalVisible(false);
+        } else {
+          Alert.alert('Error', '단어 삭제 실패: 서버에서 실패 응답을 받음');
         }
       } catch (error) {
-        console.error('단어 삭제 실패', error);
-        Alert.alert('Error', '단어 삭제 실패');
+        console.error('단어 삭제 실패:', error);
+        Alert.alert('Error', '단어 삭제 중 오류 발생');
       }
     } else {
       setHighlightedWord(null);

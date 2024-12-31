@@ -56,7 +56,7 @@ const StoryGeneratorModal = ({
       setShowSuccessModal(true);
 
       const response = await fetchWithAuth(
-        `/books/create?profileId=${profileId}`,
+        `/profiles/${profileId}/books`,
         {
           method: 'POST',
           headers: {
@@ -66,7 +66,7 @@ const StoryGeneratorModal = ({
         },
       );
 
-      if (response.ok) {
+      if ( response.status === 200 ) {
         console.log('Story created successfully');
         // 성공 상태로 모달 메시지 업데이트
         setSuccessMessage1('동화가 만들어졌어요');
