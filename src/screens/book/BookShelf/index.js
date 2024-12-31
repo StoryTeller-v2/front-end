@@ -9,13 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../../context/AuthContext';
 import { styles } from './styles';
 
-const BookShelf = () => {
+const BookShelf = ({ route }) => {
   const [selected, setSelected] = useState('ALL');
   const [modalVisible, setModalVisible] = useState(false);
   const [books, setBooks] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
 
+  const { userId } = route.params || {};
   const { profileId } = useAuth();
   const navigation = useNavigation();
 
@@ -159,7 +160,7 @@ const BookShelf = () => {
         style={styles.squareButton}
         onPress={() => {
           console.log('Profile 버튼이 눌렸습니다.');
-          navigation.navigate('Profile');
+          navigation.navigate('Profile', { userId: userId });
         }}
       >
         {imageUrl ? (

@@ -36,8 +36,6 @@ const Profile = ({ navigation, route }) => {
       const result = await response.json();
       if (response.status === 200) {
         setProfiles(result.data);
-      } else if (response.status === 404) {
-        console.error('프로필을 가져오는 데 실패했습니다:', result.message);
       } else {
         console.error('프로필을 가져오는 데 실패했습니다:', result.message);
       }
@@ -56,7 +54,10 @@ const Profile = ({ navigation, route }) => {
   };
 
   const handlePinCorrect = () => {
-    navigation.navigate('BookShelf', { profileId: selectedProfileId });
+    navigation.navigate('BookShelf', {
+      profileId: selectedProfileId,
+      userId: userId,
+    });
   };
 
   const handleProfilePress = profile => {
