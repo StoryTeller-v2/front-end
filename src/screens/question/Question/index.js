@@ -26,13 +26,13 @@ const Question = () => {
   const fetchQuiz = async (profileId, bookId) => {
     try {
       const response = await fetchWithAuth(
-        `/books/create/quiz?profileId=${profileId}&bookId=${bookId}`,
+        `/profiles/${profileId}/books/${bookId}/quiz`,
         {
           method: 'POST',
         },
       );
       const result = await response.json();
-      if (result.status === 201 && result.code === 'SUCCESS_CREATE_QUIZ') {
+      if (result.status === 201) {
         setQuizQuestion(result.data.question);
       } else {
         console.error('퀴즈를 가져오는 데 실패했습니다:', result.message);
