@@ -257,6 +257,7 @@ const Login = ({ navigation }) => {
                   value={user}
                   onChangeText={text => setUser(text)}
                   style={styles.input}
+                  autoCapitalize="none"
                 />
               </View>
               <View style={styles.inputContainer}>
@@ -267,6 +268,7 @@ const Login = ({ navigation }) => {
                   onChangeText={text => setPassword(text)}
                   style={styles.input}
                   secureTextEntry={true}
+                  autoCapitalize="none"
                 />
               </View>
               <View style={styles.buttonContainer}>
