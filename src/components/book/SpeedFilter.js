@@ -94,7 +94,7 @@ const SpeedFilter = ({
       await AsyncStorage.setItem('selectedSpeed', speed);
 
       const response = await fetchWithAuth(
-        `/settings/update?profileId=${profileId}&bookId=${bookId}`,
+        `/profiles/${profileId}/books/${bookId}/settings`,
         {
           method: 'PUT',
           headers: {
