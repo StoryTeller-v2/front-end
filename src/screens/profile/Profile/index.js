@@ -106,9 +106,8 @@ const Profile = ({ navigation, route }) => {
   };
 
   const handleBackPress = useCallback(() => {
-    navigation.navigate('BookShelf');
     return true;
-  }, [navigation]);
+  }, []);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(

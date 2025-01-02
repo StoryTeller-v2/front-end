@@ -31,7 +31,7 @@ const BookShelf = ({ route }) => {
       }
       const response = await fetchWithAuth(endpoint, { method: 'GET' });
       const result = await response.json();
-      if ( result.status === 200 ) {
+      if (result.status === 200) {
         setBooks(result.data);
       }
     } catch (error) {
@@ -46,7 +46,7 @@ const BookShelf = ({ route }) => {
         method: 'GET',
       });
       const result = await response.json();
-      if ( result.status === 200 ) {
+      if (result.status === 200) {
         setImageUrl(result.data.imageUrl);
       }
     } catch (error) {
@@ -76,7 +76,7 @@ const BookShelf = ({ route }) => {
         },
       );
       const result = await response.json();
-      if ( result.status === 200 ) {
+      if (result.status === 200) {
         setBooks(prevBooks =>
           prevBooks.map(book =>
             book.bookId === bookId
@@ -160,7 +160,10 @@ const BookShelf = ({ route }) => {
         style={styles.squareButton}
         onPress={() => {
           console.log('Profile 버튼이 눌렸습니다.');
-          navigation.navigate('Profile', { userId: userId });
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Profile', params: { profileId: profileId } }],
+          });
         }}
       >
         {imageUrl ? (
