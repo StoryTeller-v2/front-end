@@ -17,7 +17,7 @@ import { styles } from './styles';
 const Profile = ({ navigation, route }) => {
   const { userId } = route.params || {};
   console.log(`프로필 페이지의 유저 id: ${userId}`);
-  const { isLoggedIn, selectProfile } = useAuth();
+  const { isLoggedIn, selectProfile, confirmLogout } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [isChangingProfile, setIsChangingProfile] = useState(false);
   const [isAddProfileModalVisible, setIsAddProfileModalVisible] = useState(false);
@@ -165,6 +165,24 @@ const Profile = ({ navigation, route }) => {
           프로필 관리
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[
+          styles.logoutButton,
+          { borderColor: '#FF0000', borderWidth: 2, marginTop: 10 },
+        ]}
+        onPress={() => confirmLogout(navigation)}
+      >
+        <Text
+          style={[
+            styles.changeProfileButtonText,
+            { color: '#FF0000' },
+          ]}
+        >
+          로그아웃
+        </Text>
+      </TouchableOpacity>
+
       <AddProfileModal
         visible={isAddProfileModalVisible}
         onClose={handleAddProfileModalClose}

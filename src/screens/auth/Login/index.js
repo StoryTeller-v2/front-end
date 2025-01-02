@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   Image,
-  Button,
   Alert,
   ScrollView,
   KeyboardAvoidingView,
@@ -31,6 +29,7 @@ import Config from '../../../config.js';
 import {
   storeTokens,
   storeUser,
+  storeUserId,
   getAccessToken,
   getRefreshToken,
 } from '../../../utils/storage.js';
@@ -40,9 +39,6 @@ const Login = ({ navigation }) => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -76,34 +72,28 @@ const Login = ({ navigation }) => {
         if (accessToken && refreshToken) {
           await storeTokens(accessToken, refreshToken);
           await storeUser(user);
+          await storeUserId(data.data.id); // userId 저장 추가
 
-          // 로그인 상태 업데이트
           login();
 
           const storedAccessToken = await getAccessToken();
           const storedRefreshToken = await getRefreshToken();
           console.log('Stored access token:', storedAccessToken);
           console.log('Stored refresh token:', storedRefreshToken);
+          console.log('Stored userId:', data.data.id);
 
-          // Profile 화면으로 이동하면서 id값을 전달
           navigation.navigate('Profile', { userId: data.data.id });
-          console.log('전달할 데이터:', data.data.id);
         } else {
           console.error('Invalid tokens:', data);
-          setModalTitle('로그인 실패');
-          setModalMessage('유효한 토큰이 제공되지 않았습니다.');
-          setModalVisible(true);
+          Alert.alert('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
         }
       } else {
-        setModalTitle('로그인 실패');
-        setModalMessage(data.message || '로그인에 실패했습니다.');
-        setModalVisible(true);
+        console.error('Login failed:', data);
+        Alert.alert('로그인 실패', data.message || '로그인에 실패했습니다.');
       }
     } catch (error) {
       console.error(error);
-      setModalTitle('로그인 에러');
-      setModalMessage('로그인 중 오류가 발생했습니다.');
-      setModalVisible(true);
+      Alert.alert('로그인 에러', '로그인 중 오류가 발생했습니다.');
     }
   };
 
@@ -132,6 +122,7 @@ const Login = ({ navigation }) => {
         const refreshToken = response.headers.get('refresh');
 
         const data = await response.json();
+        console.log('Server response data:', data);
 
         if (response.ok) {
           if (accessToken && refreshToken) {
@@ -173,6 +164,7 @@ const Login = ({ navigation }) => {
       const userInfo = await GoogleSignin.signIn();
 
       const { idToken } = userInfo.data;
+      console.log('Google Signin userInfo:', userInfo);
 
       if (!idToken) {
         console.error('No idToken received', userInfo);
@@ -265,6 +257,7 @@ const Login = ({ navigation }) => {
                   value={user}
                   onChangeText={text => setUser(text)}
                   style={styles.input}
+                  autoCapitalize="none"
                 />
               </View>
               <View style={styles.inputContainer}>
@@ -275,6 +268,7 @@ const Login = ({ navigation }) => {
                   onChangeText={text => setPassword(text)}
                   style={styles.input}
                   secureTextEntry={true}
+                  autoCapitalize="none"
                 />
               </View>
               <View style={styles.buttonContainer}>

@@ -85,6 +85,17 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
   },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
   changeProfileButtonText: {
     fontSize: 18,
     fontWeight: '900',
