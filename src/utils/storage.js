@@ -4,6 +4,7 @@ import { decode as atob } from 'base-64';
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 const USER_KEY = 'user';
+const USER_ID_KEY = 'userId';
 
 export const storeTokens = async (accessToken, refreshToken) => {
     try {
@@ -21,6 +22,14 @@ export const storeUser = async (user) => {
         await AsyncStorage.setItem(USER_KEY, user);
     } catch (e) {
         console.error('Error storing user:', e);
+    }
+};
+
+export const storeUserId = async (userId) => {
+    try {
+        await AsyncStorage.setItem(USER_ID_KEY, userId.toString());
+    } catch (e) {
+        console.error('Error storing userId:', e);
     }
 };
 
@@ -51,9 +60,24 @@ export const getUser = async () => {
     }
 };
 
+export const getUserId = async () => {
+    try {
+        const userId = await AsyncStorage.getItem(USER_ID_KEY);
+        return userId ? parseInt(userId, 10) : null;
+    } catch (e) {
+        console.error('Error getting userId:', e);
+        return null;
+    }
+};
+
 export const removeTokens = async () => {
     try {
-        await AsyncStorage.multiRemove([ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY]);
+        await AsyncStorage.multiRemove([
+            ACCESS_TOKEN_KEY,
+            REFRESH_TOKEN_KEY,
+            USER_KEY,
+            USER_ID_KEY,
+        ]);
     } catch (e) {
         console.error('Error removing tokens:', e);
     }

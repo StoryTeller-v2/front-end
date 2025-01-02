@@ -29,6 +29,7 @@ import Config from '../../../config.js';
 import {
   storeTokens,
   storeUser,
+  storeUserId,
   getAccessToken,
   getRefreshToken,
 } from '../../../utils/storage.js';
@@ -71,18 +72,17 @@ const Login = ({ navigation }) => {
         if (accessToken && refreshToken) {
           await storeTokens(accessToken, refreshToken);
           await storeUser(user);
+          await storeUserId(data.data.id); // userId 저장 추가
 
-          // 로그인 상태 업데이트
           login();
 
           const storedAccessToken = await getAccessToken();
           const storedRefreshToken = await getRefreshToken();
           console.log('Stored access token:', storedAccessToken);
           console.log('Stored refresh token:', storedRefreshToken);
+          console.log('Stored userId:', data.data.id);
 
-          // Profile 화면으로 이동하면서 id값을 전달
           navigation.navigate('Profile', { userId: data.data.id });
-          console.log('전달할 데이터:', data.data.id);
         } else {
           console.error('Invalid tokens:', data);
           Alert.alert('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
