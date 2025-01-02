@@ -13,6 +13,14 @@ const ProfileForm = ({
   onDatePickerPress,
   date,
 }) => {
+  const handlePinChange = (text) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+
+    if (numericValue.length <= 4) {
+      onPinChange(numericValue);
+    }
+  };
+
   return (
     <>
       <View style={styles.inputWrapper}>
@@ -24,7 +32,7 @@ const ProfileForm = ({
           onChangeText={onNameChange}
         />
       </View>
-      
+
       <TouchableOpacity onPress={onDatePickerPress} style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
@@ -34,7 +42,7 @@ const ProfileForm = ({
           editable={false}
         />
       </TouchableOpacity>
-      
+
       {showDatePicker && (
         <DateTimePicker
           value={date}
@@ -43,15 +51,17 @@ const ProfileForm = ({
           onChange={onBirthdateChange}
         />
       )}
-      
+
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
           value={pin}
-          placeholder="PIN"
+          placeholder="PIN (숫자 4자리)"
           placeholderTextColor="#FF8B42"
           secureTextEntry={true}
-          onChangeText={onPinChange}
+          onChangeText={handlePinChange}
+          keyboardType="numeric"
+          maxLength={4}
         />
       </View>
     </>
