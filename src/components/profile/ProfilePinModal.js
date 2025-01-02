@@ -46,16 +46,36 @@ const ProfilePinModal = ({
   }, [visible]);
 
   const handlePinChange = (index, value) => {
+    if (value.length > 1) {
+      const digits = value.slice(0, 4).split('');
+      const newPin = [...pin];
+      digits.forEach((digit, idx) => {
+        if (idx < 4) {newPin[idx] = digit;}
+      });
+      setPin(newPin);
+
+      if (newPin.every(digit => digit.length > 0)) {
+        verifyPin(newPin.join(''));
+      }
+      return;
+    }
+
     const newPin = [...pin];
     newPin[index] = value;
     setPin(newPin);
 
-    if (value && index < pin.length - 1) {
+    if (value && index < 3) {
       inputRefs.current[index + 1].focus();
     }
 
     if (newPin.every(digit => digit.length > 0)) {
       verifyPin(newPin.join(''));
+    }
+  };
+
+  const handleKeyPress = (index, e) => {
+    if (e.nativeEvent.key === 'Backspace' && !pin[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
     }
   };
 
@@ -155,9 +175,14 @@ const ProfilePinModal = ({
                 maxLength={1}
                 value={digit}
                 onChangeText={value => handlePinChange(index, value)}
+                onKeyPress={e => handleKeyPress(index, e)}
                 onFocus={() => setSelectedInput(index)}
                 onBlur={() => setSelectedInput(null)}
                 secureTextEntry={true}
+                onPaste={e => {
+                  const pastedText = e.nativeEvent.text;
+                  handlePinChange(index, pastedText);
+                }}
               />
             ))}
           </View>
