@@ -9,6 +9,7 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [pin, setPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [showProfilePicModal, setShowProfilePicModal] = useState(false);
@@ -46,8 +47,23 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
   };
 
   const handleSaveProfile = async () => {
-    if (!name || !birthdate || !pin || !selectedProfilePic) {
-      Alert.alert('알림', '모든 필드를 입력하고 프로필 사진을 선택해주세요.');
+    if (!name || !birthdate || !pin || !confirmPin) {
+      Alert.alert('알림', '모든 필드를 입력해주세요.');
+      return;
+    }
+
+    if (pin.length !== 4) {
+      Alert.alert('알림', 'PIN은 4자리 숫자여야 합니다.');
+      return;
+    }
+
+    if (!/^\d{4}$/.test(pin)) {
+      Alert.alert('알림', 'PIN은 숫자만 입력 가능합니다.');
+      return;
+    }
+
+    if (pin !== confirmPin) {
+      Alert.alert('알림', 'PIN 번호가 일치하지 않습니다.');
       return;
     }
 
@@ -81,6 +97,7 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
     setName('');
     setBirthdate('');
     setPin('');
+    setConfirmPin('');
     setSelectedProfilePic(null);
     setDate(new Date());
   };
@@ -120,8 +137,10 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
               name={name}
               birthdate={birthdate}
               pin={pin}
+              confirmPin={confirmPin}
               onNameChange={setName}
               onPinChange={setPin}
+              onConfirmPinChange={setConfirmPin}
               showDatePicker={showDatePicker}
               onDatePickerPress={() => setShowDatePicker(true)}
               date={date}

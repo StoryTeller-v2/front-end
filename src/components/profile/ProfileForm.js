@@ -6,18 +6,26 @@ const ProfileForm = ({
   name,
   birthdate,
   pin,
+  confirmPin,
   onNameChange,
   onBirthdateChange,
   onPinChange,
+  onConfirmPinChange,
   showDatePicker,
   onDatePickerPress,
   date,
 }) => {
   const handlePinChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
-
     if (numericValue.length <= 4) {
       onPinChange(numericValue);
+    }
+  };
+
+  const handleConfirmPinChange = (text) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+    if (numericValue.length <= 4) {
+      onConfirmPinChange(numericValue);
     }
   };
 
@@ -60,6 +68,19 @@ const ProfileForm = ({
           placeholderTextColor="#FF8B42"
           secureTextEntry={true}
           onChangeText={handlePinChange}
+          keyboardType="numeric"
+          maxLength={4}
+        />
+      </View>
+
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          value={confirmPin}
+          placeholder="PIN 확인"
+          placeholderTextColor="#FF8B42"
+          secureTextEntry={true}
+          onChangeText={handleConfirmPinChange}
           keyboardType="numeric"
           maxLength={4}
         />
