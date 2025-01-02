@@ -1,33 +1,49 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  Keyboard,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import fetchWithAuth from '../../api/fetchWithAuth';
 
-const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
+const ProfilePinModal = ({
+  visible,
+  onClose,
+  profileId,
+  mode = 'select',
+  onPinVerified,
+}) => {
   const [pin, setPin] = useState(['', '', '', '']);
   const [selectedInput, setSelectedInput] = useState(null);
   const [error, setError] = useState('');
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const inputRefs = useRef([]);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   useEffect(() => {
     if (visible) {
       resetPin();
     }
   }, [visible]);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
-    });
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
 
   const handlePinChange = (index, value) => {
     const newPin = [...pin];
@@ -44,6 +60,11 @@ const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
   };
 
   const verifyPin = async enteredPin => {
+    if (!profileId) {
+      setError('프로필 ID가 없습니다. 다시 시도해주세요.');
+      return;
+    }
+
     try {
       const response = await fetchWithAuth(
         `/profiles/${profileId}/pin-number/verifications`,
@@ -58,7 +79,9 @@ const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
 
       if (result.status === 200 && result.code === 'SUCCESS_VERIFICATION_PIN_NUMBER') {
         if (result.data.valid) {
-          onPinVerified();
+          if (onPinVerified) {
+            onPinVerified(profileId);
+          }
           setError('');
           onClose();
         } else {
@@ -70,6 +93,7 @@ const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
         resetPin();
       }
     } catch (error) {
+      console.error('PIN 검증 중 오류 발생:', error);
       setError('서버 오류로 PIN 검증에 실패했습니다.');
       resetPin();
     }
@@ -77,7 +101,24 @@ const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
 
   const resetPin = () => {
     setPin(['', '', '', '']);
-    inputRefs.current[0]?.focus();
+    setError('');
+    setTimeout(() => {
+      inputRefs.current[0]?.focus();
+    }, 100);
+  };
+
+  const handleModalClose = () => {
+    Keyboard.dismiss();
+    setPin(['', '', '', '']);
+    setError('');
+    onClose();
+  };
+
+  const getHeaderText = () => {
+    if (error) return error;
+    return mode === 'edit'
+      ? '이 프로필을 관리하려면 PIN 번호를 입력하세요.'
+      : '이 프로필을 선택하려면 PIN 번호를 입력하세요.';
   };
 
   return (
@@ -85,18 +126,20 @@ const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
       transparent={true}
       animationType="slide"
       visible={visible}
-      onRequestClose={onClose}
+      onRequestClose={handleModalClose}
     >
-      <View style={styles.modalContainer}>
+      <KeyboardAvoidingView
+        style={styles.modalContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+      >
         <View style={styles.modalContent}>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <TouchableOpacity style={styles.closeButton} onPress={handleModalClose}>
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          
+
           {!isKeyboardVisible && (
-            <Text style={styles.modalHeader}>
-              {error || '이 프로필을 관리하려면 PIN 번호를 입력하세요.'}
-            </Text>
+            <Text style={styles.modalHeader}>{getHeaderText()}</Text>
           )}
 
           <View style={styles.pinContainer}>
@@ -114,11 +157,12 @@ const ProfilePinModal = ({ visible, onClose, profileId, onPinVerified }) => {
                 onChangeText={value => handlePinChange(index, value)}
                 onFocus={() => setSelectedInput(index)}
                 onBlur={() => setSelectedInput(null)}
+                secureTextEntry={true}
               />
             ))}
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

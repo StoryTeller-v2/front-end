@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddProfileModal from '../../../components/profile/AddProfileModal';
-import SelectPinInputModal from '../../../components/modals/SelectPinInputModal';
+import ProfilePinModal from '../../../components/profile/ProfilePinModal';
 import EditProfileModal from '../../../components/profile/EditProfileModal';
 import { useAuth } from '../../../context/AuthContext';
 import fetchWithAuth from '../../../api/fetchWithAuth';
@@ -16,15 +16,14 @@ import { styles } from './styles';
 
 const Profile = ({ navigation, route }) => {
   const { userId } = route.params || {};
-  console.log(`프로필 페이지의 유저 id: ${userId}`);
   const { isLoggedIn, selectProfile, confirmLogout } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [isChangingProfile, setIsChangingProfile] = useState(false);
   const [isAddProfileModalVisible, setIsAddProfileModalVisible] = useState(false);
-  const [isPinInputModalVisible, setIsPinInputModalVisible] = useState(false);
-  const [isEditPinInputModalVisible, setIsEditPinInputModalVisible] = useState(false);
+  const [isPinModalVisible, setIsPinModalVisible] = useState(false);
+  const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
   const [modalType, setModalType] = useState('');
-  const [selectedProfileId, selectProfileId] = useState(null);
+  const [selectedProfileId, setSelectedProfileId] = useState(null);
 
   const fetchProfiles = useCallback(async () => {
     try {
@@ -53,25 +52,23 @@ const Profile = ({ navigation, route }) => {
     fetchProfiles();
   };
 
-  const handlePinCorrect = () => {
-    navigation.navigate('BookShelf', {
-      profileId: selectedProfileId,
-      userId: userId,
-    });
+  const handlePinVerified = () => {
+    if (modalType === 'select') {
+      navigation.navigate('BookShelf', {
+        profileId: selectedProfileId,
+        userId: userId,
+      });
+    } else if (modalType === 'edit') {
+      setIsEditProfileModalVisible(true);
+    }
+    setIsPinModalVisible(false);
   };
 
   const handleProfilePress = profile => {
-    if (isChangingProfile) {
-      setModalType('edit');
-      selectProfile(profile.id);
-      selectProfileId(profile.id);
-      setIsEditPinInputModalVisible(true);
-    } else {
-      setModalType('select');
-      selectProfile(profile.id);
-      selectProfileId(profile.id);
-      setIsPinInputModalVisible(true);
-    }
+    setModalType(isChangingProfile ? 'edit' : 'select');
+    selectProfile(profile.id);
+    setSelectedProfileId(profile.id);
+    setIsPinModalVisible(true);
   };
 
   const handleProfileUpdate = () => {
@@ -103,7 +100,7 @@ const Profile = ({ navigation, route }) => {
     ));
   };
 
-  const changeProfileText = () => {
+  const handleChangeProfilePress = () => {
     setIsChangingProfile(!isChangingProfile);
     selectProfile(null);
   };
@@ -130,10 +127,9 @@ const Profile = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>
-        {isChangingProfile
-          ? '관리할 프로필을 골라주세요'
-          : '프로필을 선택해주세요'}
+        {isChangingProfile ? '관리할 프로필을 골라주세요' : '프로필을 선택해주세요'}
       </Text>
+
       <View style={styles.profilesContainer}>
         {renderProfiles()}
         {!isChangingProfile && (
@@ -145,40 +141,25 @@ const Profile = ({ navigation, route }) => {
           </TouchableOpacity>
         )}
       </View>
+
       <TouchableOpacity
-        style={[
-          styles.changeProfileButton,
-          { borderColor: '#393939', borderWidth: 2 },
-        ]}
-        onPress={changeProfileText}
+        style={[styles.changeProfileButton, { borderColor: '#393939', borderWidth: 2 }]}
+        onPress={handleChangeProfilePress}
       >
         <Image
           source={require('../../../../assets/images/pen.png')}
           style={styles.penIcon}
         />
-        <Text
-          style={[
-            styles.changeProfileButtonText,
-            { color: '#393939', marginLeft: 10 },
-          ]}
-        >
+        <Text style={[styles.changeProfileButtonText, { color: '#393939', marginLeft: 10 }]}>
           프로필 관리
         </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[
-          styles.logoutButton,
-          { borderColor: '#FF0000', borderWidth: 2, marginTop: 10 },
-        ]}
+        style={[styles.logoutButton, { borderColor: '#FF0000', borderWidth: 2, marginTop: 10 }]}
         onPress={() => confirmLogout(navigation)}
       >
-        <Text
-          style={[
-            styles.changeProfileButtonText,
-            { color: '#FF0000' },
-          ]}
-        >
+        <Text style={[styles.changeProfileButtonText, { color: '#FF0000' }]}>
           로그아웃
         </Text>
       </TouchableOpacity>
@@ -189,17 +170,20 @@ const Profile = ({ navigation, route }) => {
         userId={userId}
       />
 
-      <SelectPinInputModal
-        visible={isPinInputModalVisible && modalType === 'select'}
-        onClose={() => setIsPinInputModalVisible(false)}
-        onPinCorrect={handlePinCorrect}
+      <ProfilePinModal
+        mode={modalType}
+        visible={isPinModalVisible}
+        onClose={() => setIsPinModalVisible(false)}
+        onPinVerified={handlePinVerified}
         profileId={selectedProfileId}
-        onProfileUpdate={handleProfileUpdate}
       />
+
       <EditProfileModal
-        visible={isEditPinInputModalVisible}
-        onClose={() => setIsEditPinInputModalVisible(false)}
-        onPinCorrect={handlePinCorrect}
+        visible={isEditProfileModalVisible}
+        onClose={() => {
+          setIsEditProfileModalVisible(false);
+          handleProfileUpdate();
+        }}
         profileId={selectedProfileId}
         onProfileUpdate={handleProfileUpdate}
       />
