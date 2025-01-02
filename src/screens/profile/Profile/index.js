@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddProfileModal from '../../../components/profile/AddProfileModal';
 import SelectPinInputModal from '../../../components/modals/SelectPinInputModal';
-import EditPinInputModal from '../../../components/profile/EditPinInputModal';
+import EditProfileModal from '../../../components/profile/EditProfileModal';
 import { useAuth } from '../../../context/AuthContext';
 import fetchWithAuth from '../../../api/fetchWithAuth';
 import { styles } from './styles';
@@ -196,7 +196,7 @@ const Profile = ({ navigation, route }) => {
         profileId={selectedProfileId}
         onProfileUpdate={handleProfileUpdate}
       />
-      <EditPinInputModal
+      <EditProfileModal
         visible={isEditPinInputModalVisible}
         onClose={() => setIsEditPinInputModalVisible(false)}
         onPinCorrect={handlePinCorrect}
