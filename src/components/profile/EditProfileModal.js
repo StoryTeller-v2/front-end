@@ -18,6 +18,7 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [pin, setPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [showProfilePicModal, setShowProfilePicModal] = useState(false);
@@ -69,8 +70,23 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
   }, [visible, fetchProfileData]);
 
   const handleSaveProfile = async () => {
-    if (!name || !birthdate || !pin || !selectedProfilePic) {
-      showErrorModal('모든 필드를 입력해 주세요', '빠트린 것이 없는지 다시 확인해주세요.');
+    if (!name || !birthdate || !pin || !confirmPin) {
+      showErrorModal('알림', '모든 필드를 입력해주세요.');
+      return;
+    }
+
+    if (pin.length !== 4) {
+      showErrorModal('알림', 'PIN은 4자리 숫자여야 합니다.');
+      return;
+    }
+
+    if (!/^\d{4}$/.test(pin)) {
+      showErrorModal('알림', 'PIN은 숫자만 입력 가능합니다.');
+      return;
+    }
+
+    if (pin !== confirmPin) {
+      showErrorModal('알림', 'PIN 번호가 일치하지 않습니다.');
       return;
     }
 
@@ -151,8 +167,10 @@ const EditProfileModal = ({ visible, onClose, profileId, onProfileUpdate }) => {
               name={name}
               birthdate={birthdate}
               pin={pin}
+              confirmPin={confirmPin}
               onNameChange={setName}
               onPinChange={setPin}
+              onConfirmPinChange={setConfirmPin}
               showDatePicker={showDatePicker}
               onDatePickerPress={() => setShowDatePicker(true)}
               date={date}
