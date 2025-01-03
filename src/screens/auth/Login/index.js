@@ -34,11 +34,15 @@ import {
   getRefreshToken,
 } from '../../../utils/storage.js';
 import { styles } from './styles';
+import OkModal from '../../../components/common/OkModal.js';
 
 const Login = ({ navigation }) => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -85,15 +89,15 @@ const Login = ({ navigation }) => {
           navigation.navigate('Profile', { userId: data.data.id });
         } else {
           console.error('Invalid tokens:', data);
-          Alert.alert('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
+          showErrorModal('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
         }
       } else {
         console.error('Login failed:', data);
-        Alert.alert('로그인 실패', data.message || '로그인에 실패했습니다.');
+        showErrorModal('로그인 실패', data.message || '로그인에 실패했습니다.');
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('로그인 에러', '로그인 중 오류가 발생했습니다.');
+      showErrorModal('로그인 에러', '로그인 중 오류가 발생했습니다.');
     }
   };
 
@@ -128,7 +132,7 @@ const Login = ({ navigation }) => {
           if (accessToken && refreshToken) {
             await storeTokens(accessToken, refreshToken);
             await storeUser(nickname);
-            Alert.alert(
+            showErrorModal(
               '카카오 로그인 성공',
               `${nickname}님, StoryTeller에 오신것을 환영합니다`,
             );
@@ -142,18 +146,18 @@ const Login = ({ navigation }) => {
             navigation.navigate('Profile', { userId: data.data.id });
           } else {
             console.error('유효하지 않은 토큰:', data);
-            Alert.alert('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
+            showErrorModal('로그인 실패', '유효한 토큰이 제공되지 않았습니다.');
           }
         } else {
           console.error('로그인 실패:', data);
-          Alert.alert('로그인 실패', data.message || '로그인에 실패했습니다.');
+          showErrorModal('로그인 실패', data.message || '로그인에 실패했습니다.');
         }
       } else {
-        Alert.alert('카카오 로그인 실패', '로그인에 실패했습니다.');
+        showErrorModal('카카오 로그인 실패', '로그인에 실패했습니다.');
       }
     } catch (error) {
       console.error('카카오 로그인 중 오류:', error);
-      Alert.alert('카카오 로그인 에러', '로그인 중 오류가 발생했습니다.');
+      showErrorModal('카카오 로그인 에러', '로그인 중 오류가 발생했습니다.');
     }
   };
 
@@ -198,7 +202,7 @@ const Login = ({ navigation }) => {
         await storeTokens(accessToken, refreshToken);
         await storeUser(nickname);
 
-        Alert.alert(
+        showErrorModal(
           '구글 로그인 성공',
           `${nickname}님, StoryTeller에 오신것을 환영합니다`,
         );
@@ -208,26 +212,32 @@ const Login = ({ navigation }) => {
         // Profile 화면으로 이동하면서 id값을 전달
         navigation.navigate('Profile', { userId: data.data.id });
       } else {
-        Alert.alert('구글 로그인 실패', '액세스 토큰을 받지 못했습니다.');
+        showErrorModal('구글 로그인 실패', '액세스 토큰을 받지 못했습니다.');
       }
     } catch (error) {
       console.error('Error during Google Signin:', error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        Alert.alert('로그인 취소', '로그인을 취소하셨습니다.');
+        showErrorModal('로그인 취소', '로그인을 취소하셨습니다.');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        Alert.alert('로그인 진행 중', '로그인이 진행 중입니다.');
+        showErrorModal('로그인 진행 중', '로그인이 진행 중입니다.');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        Alert.alert(
+        showErrorModal(
           'Google Play 서비스 오류',
           'Google Play 서비스가 설치되어 있지 않습니다.',
         );
       } else {
-        Alert.alert(
+        showErrorModal(
           '로그인 에러',
           `로그인 중 오류가 발생했습니다: ${error.message}`,
         );
       }
     }
+  };
+
+  const showErrorModal = (title, message) => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setModalVisible(true);
   };
 
   return (
@@ -311,6 +321,13 @@ const Login = ({ navigation }) => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      
+      <OkModal
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        title={modalTitle}
+        message={modalMessage}
+      />
     </SafeAreaView>
   );
 };

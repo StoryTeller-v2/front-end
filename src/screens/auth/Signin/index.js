@@ -29,23 +29,17 @@ const Signin = ({ navigation }) => {
 
   const handleSignup = async () => {
     if (password !== checkPW) {
-      setModalTitle('비밀번호 오류');
-      setModalMessage('비밀번호가 일치하지 않습니다.');
-      setModalVisible(true);
+      showModal('비밀번호 오류', '비밀번호가 일치하지 않습니다.');
       return;
     }
 
     if (!isUsernameVerified) {
-      setModalTitle('아이디 확인 필요');
-      setModalMessage('아이디 중복 확인을 해주세요.');
-      setModalVisible(true);
+      showModal('아이디 확인 필요', '아이디 중복 확인을 해주세요.');
       return;
     }
 
     if (!isEmailVerified) {
-      setModalTitle('이메일 인증 필요');
-      setModalMessage('이메일 인증을 해주세요.');
-      setModalVisible(true);
+      showModal('이메일 인증 필요', '이메일 인증을 해주세요.');
       return;
     }
 
@@ -64,23 +58,17 @@ const Signin = ({ navigation }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setModalTitle('환영합니다!');
-        setModalMessage('회원가입이 성공적으로 완료되었습니다.');
-        setModalVisible(true);
+        showModal('환영합니다!', '회원가입이 성공적으로 완료되었습니다.');
         setTimeout(() => {
           setModalVisible(false);
           navigation.navigate('Login');
         }, 2000);
       } else {
-        setModalTitle('가입 실패');
-        setModalMessage(data.message || '회원가입에 실패했습니다.');
-        setModalVisible(true);
+        showModal('가입 실패', data.message || '회원가입에 실패했습니다.');
       }
     } catch (error) {
       console.error(error);
-      setModalTitle('오류 발생');
-      setModalMessage('회원가입 중 오류가 발생했습니다.');
-      setModalVisible(true);
+      showModal('오류 발생', '회원가입 중 오류가 발생했습니다.');
     }
   };
 
@@ -100,19 +88,13 @@ const Signin = ({ navigation }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setModalTitle('이메일 발송 완료');
-        setModalMessage('인증 이메일이 성공적으로 발송되었습니다.');
-        setModalVisible(true);
+        showModal('이메일 발송 완료', '인증 이메일이 성공적으로 발송되었습니다.');
       } else {
-        setModalTitle('발송 실패');
-        setModalMessage(data.message || '인증 이메일 발송에 실패했습니다.');
-        setModalVisible(true);
+        showModal('발송 실패', data.message || '인증 이메일 발송에 실패했습니다.');
       }
     } catch (error) {
       console.error(error);
-      setModalTitle('오류 발생');
-      setModalMessage('인증 이메일 요청 중 오류가 발생했습니다.');
-      setModalVisible(true);
+      showModal('오류 발생', '인증 이메일 요청 중 오류가 발생했습니다.');
     }
   };
 
@@ -134,24 +116,16 @@ const Signin = ({ navigation }) => {
       if (response.ok) {
         if (data.data.authResult) {
           setIsEmailVerified(true);
-          setModalTitle('이메일 인증에 성공했습니다');
-          setModalMessage('이메일 인증이 성공적으로 확인되었습니다.');
-          setModalVisible(true);
+          showModal('이메일 인증 성공', '이메일 인증이 성공적으로 확인되었습니다.');
         } else {
-          setModalTitle('이메일 인증에 실패했습니다');
-          setModalMessage('인증번호가 일치하지 않습니다.');
-          setModalVisible(true);
+          showModal('이메일 인증 실패', '인증번호가 일치하지 않습니다.');
         }
       } else {
-        setModalTitle('이메일 인증에 실패했습니다');
-        setModalMessage(data.message || '이메일 인증 확인에 실패했습니다.');
-        setModalVisible(true);
+        showModal('이메일 인증 실패', data.message || '이메일 인증 확인에 실패했습니다.');
       }
     } catch (error) {
       console.error(error);
-      setModalTitle('이메일 인증에 실패했습니다');
-      setModalMessage('이메일 인증 확인 중 오류가 발생했습니다.');
-      setModalVisible(true);
+      showModal('이메일 인증 실패', '이메일 인증 확인 중 오류가 발생했습니다.');
     }
   };
 
@@ -173,32 +147,24 @@ const Signin = ({ navigation }) => {
       if (response.ok) {
         if (data.data.authResult) {
           setIsUsernameVerified(true);
-          setModalTitle('아이디 인증에 성공했습니다');
-          setModalMessage(
-            '이 아이디는 사용이 가능합니다. \n이제 다른 정보를 입력해 주세요.',
-          );
+          showModal('아이디 인증 성공', '이 아이디는 사용이 가능합니다. \n이제 다른 정보를 입력해 주세요.');
         } else {
-          setModalTitle('중복된 아이디입니다');
-          setModalMessage(
-            '이 아이디는 이미 사용 중입니다.\n다른 아이디를 시도해 주세요.',
-          );
+          showModal('아이디 인증 실패', '이 아이디는 이미 사용 중입니다.\n다른 아이디를 시도해 주세요.');
         }
       } else {
-        setModalTitle('아이디 인증에 실패했습니다');
-        setModalMessage(
-          data.message ||
-          '아이디 중복 확인 중 문제가 발생했어요.\n잠시 후 다시 시도해 주세요.',
-        );
+        showModal('아이디 인증 실패', data.message || '아이디 중복 확인 중 문제가 발생했어요.\n다시 시도해 주세요.');
       }
     } catch (error) {
-      console.error(error);
-      setModalTitle('문제가 발생했어요');
-      setModalMessage(
-        '아이디 중복 확인 중 오류가 발생했어요.\n다시 시도해 주세요.',
-      );
+      showModal('아이디 인증 실패', '아이디 중복 확인 중 오류가 발생했어요.\n다시 시도해 주세요.');
     } finally {
       setModalVisible(true);
     }
+  };
+
+  const showModal = (title, message) => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setModalVisible(true);
   };
 
   return (
@@ -297,6 +263,7 @@ const Signin = ({ navigation }) => {
             </View>
           </View>
         </ScrollView>
+
         <OkModal
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
