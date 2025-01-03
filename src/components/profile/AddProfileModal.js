@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, Modal, Alert, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Modal, Platform } from 'react-native';
 import YesNoModal from '../common/YesNoModal';
 import fetchWithAuth from '../../api/fetchWithAuth';
 import ProfileForm from './ProfileForm';
 import ProfileImageSelector from './ProfileImageSelector';
+import OkModal from '../common/OkModal';
 
 const AddProfileModal = ({ visible, onClose, userId }) => {
   const [name, setName] = useState('');
@@ -19,12 +20,21 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
   const [defaultProfilePic, setDefaultProfilePic] = useState(
     require('../../../assets/images/temp_profile_pic.png')
   );
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     if (visible) {
       fetchProfilePictures();
     }
   }, [visible]);
+
+  const showErrorModal = (title, message) => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setModalVisible(true);
+  };
 
   const fetchProfilePictures = async () => {
     try {
@@ -48,22 +58,22 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
 
   const handleSaveProfile = async () => {
     if (!name || !birthdate || !pin || !confirmPin) {
-      Alert.alert('알림', '모든 필드를 입력해주세요.');
+      showErrorModal('알림', '모든 필드를 입력해주세요.');
       return;
     }
 
     if (pin.length !== 4) {
-      Alert.alert('알림', 'PIN은 4자리 숫자여야 합니다.');
+      showErrorModal('알림', 'PIN은 4자리 숫자여야 합니다.');
       return;
     }
 
     if (!/^\d{4}$/.test(pin)) {
-      Alert.alert('알림', 'PIN은 숫자만 입력 가능합니다.');
+      showErrorModal('알림', 'PIN은 숫자만 입력 가능합니다.');
       return;
     }
 
     if (pin !== confirmPin) {
-      Alert.alert('알림', 'PIN 번호가 일치하지 않습니다.');
+      showErrorModal('알림', 'PIN 번호가 일치하지 않습니다.');
       return;
     }
 
@@ -86,7 +96,7 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
         resetForm();
         onClose();
       } else if (result.status === 404) {
-        Alert.alert('프로필 생성 실패', '유저 정보를 찾을 수 없습니다.');
+        showErrorModal('프로필 생성 실패', '유저 정보를 찾을 수 없습니다.');
       }
     } catch (error) {
       console.error('프로필 생성 중 오류 발생:', error);
@@ -162,6 +172,13 @@ const AddProfileModal = ({ visible, onClose, userId }) => {
           </View>
         </View>
       </Modal>
+
+      <OkModal
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        title={modalTitle}
+        message={modalMessage}
+      />
 
       <YesNoModal
         isVisible={showYesNoModal}
